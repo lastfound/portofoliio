@@ -227,16 +227,14 @@ input, textarea, button { font-family: var(--font-main); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent2); }
 
-/* ---- Responsive ---- */
+/*  Responsive  */
 @media (max-width: 900px) {
   .section {
     padding: 6rem 2rem 4rem;
   }
 }
 
-/* =========================================
-   CURSOR
-   ========================================= */
+/*CURSOR */
 .cursor {
   width: 10px;
   height: 10px;
@@ -271,9 +269,7 @@ input, textarea, button { font-family: var(--font-main); }
   background: rgba(0, 245, 255, 0.05);
 }
 
-/* =========================================
-   NAVBAR
-   ========================================= */
+/* NAVBAR*/
 .navbar {
   position: fixed;
   top: 0;
@@ -374,9 +370,7 @@ input, textarea, button { font-family: var(--font-main); }
   .navbar-status { display: none; }
 }
 
-/* =========================================
-   TENTANG (HERO)
-   ========================================= */
+/* TENTANG (HERO) */
 .tentang {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -561,12 +555,14 @@ input, textarea, button { font-family: var(--font-main); }
   top: 20px;
   right: -70px;
   animation: float 6s ease-in-out infinite;
+  z-index: 999;
 }
 
 .floating-badge.bottom {
   bottom: 50px;
   left: -80px;
   animation: float 6s ease-in-out infinite 2s;
+  z-index: 999;
 }
 
 .floating-badge .hl {
@@ -975,19 +971,17 @@ input, textarea, button { font-family: var(--font-main); }
   }
 }
 
-/* =========================================
-   AVATAR PHOTO + INITIALS OVERLAY
-   ========================================= */
+/*AVATAR PHOTO + INITIALS OVERLAY */
 
 .avatar-photo {
   position: absolute;
-  inset: 0;
+  margin-top: 60%;
   width: 100%;
-  height: 100%;
+  height: 150%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center bottom;
   z-index: 1;
-  /* Efek futuristik pada foto */
+  /* efek futuristik pada foto */
   filter: saturate(0.85) contrast(1.05);
   transition: filter 0.4s ease;
 }
@@ -996,7 +990,7 @@ input, textarea, button { font-family: var(--font-main); }
   filter: saturate(1.1) contrast(1.1);
 }
 
-/* Gradient overlay agar foto blend dengan tema gelap */
+/* gradient overlay biar foto blend dengan tema gelap */
 .avatar-frame::after {
   content: '';
   position: absolute;
@@ -1023,7 +1017,7 @@ input, textarea, button { font-family: var(--font-main); }
   letter-spacing: -0.05em;
   line-height: 1;
   user-select: none;
-  /* Posisi tengah saat tidak ada foto */
+  /* posisi tengah saat tidak ada foto */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -60%);
@@ -1037,7 +1031,6 @@ input, textarea, button { font-family: var(--font-main); }
   left: 16px;
   transform: none;
   opacity: 0.55;
-  /* Tambah sedikit backdrop agar terbaca di atas foto */
   text-shadow: 0 0 20px rgba(0, 245, 255, 0.5);
 }
 
@@ -1210,7 +1203,7 @@ section.in-view::before {
 }
 
 .hero-skills .skill-tag {
-  opacity: 0;
+  opacity: 1;
   animation: none;
 }
 
@@ -1835,4 +1828,48 @@ section {
   input, textarea, select {
     cursor: pointer !important;
   }
+}
+
+/* =========================================
+   TYPING TEXT
+   ========================================= */
+.typing-text {
+  display: inline;
+}
+
+.typing-cursor {
+  display: inline-block;
+  color: var(--accent);
+  font-weight: 300;
+  margin-left: 1px;
+  transition: opacity 0.1s;
+}
+
+/* =========================================
+   RIPPLE BUTTON
+   ========================================= */
+.ripple-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple-effect {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  animation: ripple-anim 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  pointer-events: none;
+}
+
+@keyframes ripple-anim {
+  0%   { transform: translate(-50%, -50%) scale(0);  opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(40); opacity: 0; }
+}
+
+.form-submit {
+  position: relative;
+  overflow: hidden;
 }
