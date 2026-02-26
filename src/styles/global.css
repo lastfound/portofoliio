@@ -558,7 +558,6 @@ input, textarea, button { font-family: var(--font-main); }
 }
 
 .floating-badge.top {
-  z-index: 999;
   top: 20px;
   right: -70px;
   animation: float 6s ease-in-out infinite;
@@ -568,7 +567,6 @@ input, textarea, button { font-family: var(--font-main); }
   bottom: 50px;
   left: -80px;
   animation: float 6s ease-in-out infinite 2s;
-  z-index: 999;
 }
 
 .floating-badge .hl {
@@ -977,17 +975,19 @@ input, textarea, button { font-family: var(--font-main); }
   }
 }
 
-/*AVATAR PHOTO + INITIALS OVERLAY */
+/* =========================================
+   AVATAR PHOTO + INITIALS OVERLAY
+   ========================================= */
 
 .avatar-photo {
   position: absolute;
   inset: 0;
   width: 100%;
-  height: 145%;
+  height: 100%;
   object-fit: cover;
   object-position: center top;
   z-index: 1;
-  /* efek futuristik  (foto) */
+  /* Efek futuristik pada foto */
   filter: saturate(0.85) contrast(1.05);
   transition: filter 0.4s ease;
 }
@@ -1210,7 +1210,7 @@ section.in-view::before {
 }
 
 .hero-skills .skill-tag {
-  opacity: 1;
+  opacity: 0;
   animation: none;
 }
 
@@ -1664,4 +1664,175 @@ section {
 
   body { background: white; color: black; cursor: auto; }
   section { min-height: auto; padding: 2rem; break-inside: avoid; }
+}
+
+/* =========================================
+   HAMBURGER MENU & MOBILE NAVIGATION
+   ========================================= */
+
+/* Sembunyikan hamburger di desktop */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  padding: 8px;
+  transition: border-color var(--transition);
+  z-index: 200;
+}
+
+.hamburger:hover {
+  border-color: var(--accent);
+}
+
+.hamburger span {
+  display: block;
+  width: 20px;
+  height: 1.5px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: center;
+}
+
+/* Animasi X saat open */
+.hamburger.open span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+  background: var(--accent);
+}
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+  background: var(--accent);
+}
+
+/* Mobile menu overlay */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  top: 0;
+  background: rgba(5, 8, 16, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 150;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+  border-top: 1px solid var(--border);
+}
+
+.mobile-menu.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Links di mobile menu */
+.mobile-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0 2rem;
+}
+
+.mobile-links li {
+  width: 100%;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.mobile-menu.open .mobile-links li {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mobile-links a {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.2rem 1.5rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  transition: all 0.3s ease;
+  letter-spacing: -0.01em;
+}
+
+.mobile-links a:hover,
+.mobile-links a.active {
+  color: var(--accent);
+  border-color: var(--border);
+  background: rgba(0, 245, 255, 0.04);
+}
+
+.mobile-link-num {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--accent);
+  opacity: 0.6;
+  min-width: 20px;
+}
+
+/* Footer di dalam mobile menu */
+.mobile-menu-footer {
+  position: absolute;
+  bottom: 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-dim);
+}
+
+/* Tampilkan hamburger di mobile/tablet */
+@media (max-width: 900px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .mobile-menu {
+    display: flex;
+  }
+
+  /* Pastikan navbar di atas mobile menu */
+  .navbar {
+    z-index: 200;
+  }
+}
+
+/* Touch device — pastikan cursor bawaan aktif */
+@media (hover: none) and (pointer: coarse) {
+  body {
+    cursor: auto !important;
+  }
+  * {
+    cursor: auto;
+  }
+  a, button, .btn, .form-submit,
+  .project-card, .cert-card,
+  .contact-channel, .skill-tag,
+  input, textarea, select {
+    cursor: pointer !important;
+  }
 }

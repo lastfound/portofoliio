@@ -22,7 +22,7 @@ function ScrollAnimator() {
       { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
     );
 
-    // ── 2. Stagger children (animasi berurutan) ──
+    //animasi berurutan
     const staggerObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -51,7 +51,7 @@ function ScrollAnimator() {
       { threshold: 0.5 }
     );
 
-    // ── 4. Parallax ringan pada section ──
+    //parallax ringan 
     const handleParallax = () => {
       const parallaxEls = document.querySelectorAll('.parallax-slow');
       parallaxEls.forEach((el) => {
@@ -61,7 +61,7 @@ function ScrollAnimator() {
       });
     };
 
-    // ── 5. Progress bar scroll ──
+    //progress bar scroll 
     const handleProgress = () => {
       const bar = document.getElementById('scroll-progress');
       if (!bar) return;
@@ -70,7 +70,7 @@ function ScrollAnimator() {
       bar.style.width = `${(scrolled / total) * 100}%`;
     };
 
-    // ── 6. Section highlight di navbar ──
+    // Section highlight di navbar 
     const handleSectionHighlight = () => {
       const sections = document.querySelectorAll('section[id]');
       sections.forEach((sec) => {
@@ -83,10 +83,10 @@ function ScrollAnimator() {
       });
     };
 
-    // Fungsi counter angka
+    // fungsi counter angka
     function animateCounter(el) {
       const raw = el.getAttribute('data-count') || el.textContent;
-      const suffix = raw.replace(/[0-9.]/g, ''); // ambil suffix: +, %, dll
+      const suffix = raw.replace(/[0-9.]/g, ''); 
       const target = parseFloat(raw);
       if (isNaN(target)) return;
 
@@ -104,7 +104,7 @@ function ScrollAnimator() {
       }, duration / steps);
     }
 
-    // Register semua elemen
+    // register semua elemen
     const registerAll = () => {
       document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
       document.querySelectorAll('.stagger-parent').forEach((el) => staggerObserver.observe(el));
@@ -120,7 +120,7 @@ function ScrollAnimator() {
     window.addEventListener('scroll', handleProgress, { passive: true });
     window.addEventListener('scroll', handleSectionHighlight, { passive: true });
 
-    // Panggil sekali saat mount
+    // panggil sekali saat mount
     handleProgress();
     handleSectionHighlight();
 
