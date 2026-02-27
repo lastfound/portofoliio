@@ -43,6 +43,11 @@ body {
   line-height: 1.6;
 }
 
+/* Kembalikan cursor bawaan di HP/touch device sejak awal load */
+@media (hover: none) and (pointer: coarse) {
+  body { cursor: auto !important; }
+}
+
 /* ---- Background Texture & Grid ---- */
 body::before {
   content: '';
@@ -1642,8 +1647,13 @@ section {
 
 /* ── Touch device — remove cursor custom ── */
 @media (hover: none) and (pointer: coarse) {
-  body { cursor: auto; }
-  .cursor, .cursor-trail { display: none; }
+  body { cursor: auto !important; }
+  .cursor, .cursor-trail {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
   .btn, .form-submit,
   .project-card, .cert-card,
   .contact-channel,
@@ -1831,8 +1841,13 @@ section {
   body {
     cursor: auto !important;
   }
-  * {
+  *:not(.cursor):not(.cursor-trail) {
     cursor: auto;
+  }
+  .cursor, .cursor-trail {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
   }
   a, button, .btn, .form-submit,
   .project-card, .cert-card,
