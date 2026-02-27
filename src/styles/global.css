@@ -239,8 +239,9 @@ input, textarea, button { font-family: var(--font-main); }
   }
 }
 
-/*CURSOR */
+/*CURSOR — disembunyikan secara default, hanya muncul di desktop (mouse) */
 .cursor {
+  display: none;
   width: 10px;
   height: 10px;
   background: var(--accent);
@@ -258,6 +259,7 @@ input, textarea, button { font-family: var(--font-main); }
 }
 
 .cursor-trail {
+  display: none;
   width: 32px;
   height: 32px;
   border: 1px solid rgba(0, 245, 255, 0.4);
@@ -272,6 +274,12 @@ input, textarea, button { font-family: var(--font-main); }
 .cursor-trail.hovered {
   border-color: rgba(0, 245, 255, 0.8);
   background: rgba(0, 245, 255, 0.05);
+}
+
+/* Tampilkan HANYA di perangkat dengan mouse (hover: hover = bukan touch) */
+@media (hover: hover) and (pointer: fine) {
+  .cursor       { display: block; }
+  .cursor-trail { display: block; }
 }
 
 /* NAVBAR*/
