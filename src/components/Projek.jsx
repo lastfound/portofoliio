@@ -1,15 +1,20 @@
 import React, { useEffect, useRef } from 'react';
+import imgBoanana from '../assets/boanana.png';
+import imgDashboard from '../assets/dashboard.png';
+import imgTictactoe from '../assets/tictactoe.png';
 
 const PROJECTS = [
   {
     id: '001', emoji: '🛍️',
-    name: 'E-Commerce Platform',
-    desc: 'Platform belanja online modern dengan sistem keranjang belanja, filter produk canggih, dan integrasi pembayaran yang seamless.',
-    tags: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-    link: '#',
+    image: imgBoanana,
+    name: 'Website Boanana',
+    desc: 'Platform produk kripik pisang milik umkm bernama Boanana yang dibuat menggunakan react vite dengan tampilan yang menarik dan lucu.',
+    tags: ['React', 'Node.js', 'Vite', 'Figma'],
+    link: 'https://lastfound.github.io/boanana/',
   },
   {
     id: '002', emoji: '📊',
+    image: imgDashboard,
     name: 'Dashboard Analitik',
     desc: 'Dashboard interaktif untuk visualisasi data bisnis secara real-time, dilengkapi grafik dinamis dan laporan otomatis.',
     tags: ['Vue.js', 'Chart.js', 'Laravel', 'MySQL'],
@@ -17,6 +22,7 @@ const PROJECTS = [
   },
   {
     id: '003', emoji: '💬',
+    image: imgTictactoe,
     name: 'Aplikasi Chat Real-Time',
     desc: 'Aplikasi pesan instan berbasis WebSocket dengan fitur room chat, notifikasi push, dan pengiriman file multimedia.',
     tags: ['Socket.io', 'Express', 'PostgreSQL', 'Redis'],
@@ -29,13 +35,11 @@ function Projek() {
   const gridRef   = useRef(null);
 
   useEffect(() => {
-    // Observe header
     const obs1 = new IntersectionObserver(([e]) => {
       if (e.isIntersecting) { headerRef.current?.classList.add('visible'); obs1.disconnect(); }
     }, { threshold: 0.1 });
     if (headerRef.current) obs1.observe(headerRef.current);
 
-    // Observe grid — stagger tiap card
     const obs2 = new IntersectionObserver(([e]) => {
       if (e.isIntersecting) {
         const cards = gridRef.current?.querySelectorAll('.stagger-child');
@@ -60,7 +64,47 @@ function Projek() {
       <div className="projects-grid stagger-parent" ref={gridRef}>
         {PROJECTS.map((project) => (
           <div className="project-card stagger-child" key={project.id}>
-            <div className="project-thumb">{project.emoji}</div>
+
+            {/* ── Preview Gambar / Thumbnail ── */}
+            <div className="project-thumb" style={{ position: 'relative', overflow: 'hidden' }}>
+              {project.image ? (
+                <img
+                  src={project.image}
+                  alt={`Preview ${project.name}`}
+                  className="project-thumb-img"
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain',
+                    objectPosition: 'center center',
+                    display: 'block',
+                    transition: 'transform 0.5s ease',
+                  }}
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.nextSibling.style.display = 'flex';
+                  }}
+                />
+              ) : null}
+              {/* Emoji fallback — ditampilkan jika tidak ada gambar atau gambar error */}
+              <span
+                className="project-thumb-emoji"
+                style={{
+                  display: project.image ? 'none' : 'flex',
+                  width: '100%',
+                  height: '100%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '3rem',
+                }}
+              >
+                {project.emoji}
+              </span>
+            </div>
+
+            {/* ── Konten ── */}
             <div className="project-body">
               <div className="project-num">{project.id} / PROJECT</div>
               <h3 className="project-name">{project.name}</h3>
