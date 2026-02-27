@@ -4,9 +4,8 @@ function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer className="footer">
-      <span>© {year} Muhammad Developer. All rights reserved.</span>
-      <span>Dibangun dengan ❤️ menggunakan React.js</span>
-      <span className="footer-accent">Tersedia untuk proyek baru ✦</span>
+      <span>© {year} Rafi Ibrahim. All rights reserved.</span>
+      <span className="footer-accent">Siap untuk proyek baru </span>
     </footer>
   );
 }

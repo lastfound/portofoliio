@@ -5,29 +5,22 @@ function Cursor() {
   const trailRef     = useRef(null);
   const [hovered, setHovered]   = useState(false);
   const [visible, setVisible]   = useState(false);
-  const [isTouch, setIsTouch]   = useState(false);
+  const [isTouch, setIsTouch]   = useState(
+    // cek langsung saat pertama render supaya tidak ada flash cursor di HP
+    () => window.matchMedia('(hover: none) and (pointer: coarse)').matches
+  );
   const mousePos     = useRef({ x: 0, y: 0 });
   const trailPos     = useRef({ x: 0, y: 0 });
   const animFrameRef = useRef(null);
 
   useEffect(() => {
-    // Deteksi apakah perangkat layar sentuh
-    const checkTouch = () => {
-      const touch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-      setIsTouch(touch);
-    };
-    checkTouch();
-    window.matchMedia('(hover: none) and (pointer: coarse)')
-      .addEventListener('change', checkTouch);
-
-    return () => {
-      window.matchMedia('(hover: none) and (pointer: coarse)')
-        .removeEventListener('change', checkTouch);
-    };
+    const mq = window.matchMedia('(hover: none) and (pointer: coarse)');
+    const checkTouch = () => setIsTouch(mq.matches);
+    mq.addEventListener('change', checkTouch);
+    return () => mq.removeEventListener('change', checkTouch);
   }, []);
 
   useEffect(() => {
-    // Jangan pasang event jika layar sentuh
     if (isTouch) return;
 
     const handleMouseMove = (e) => {
@@ -73,7 +66,7 @@ function Cursor() {
     };
   }, [isTouch]);
 
-  // Sembunyikan total di layar sentuh
+  // Hilang total di perangkat sentuh / HP
   if (isTouch) return null;
 
   return (

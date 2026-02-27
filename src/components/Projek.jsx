@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import imgBoanana from '../assets/boanana.png';
+import imgBoanana   from '../assets/boanana.png';
 import imgDashboard from '../assets/dashboard.png';
 import imgTictactoe from '../assets/tictactoe.png';
 
@@ -66,19 +66,21 @@ function Projek() {
           <div className="project-card stagger-child" key={project.id}>
 
             {/* ── Preview Gambar / Thumbnail ── */}
-            <div className="project-thumb" style={{ position: 'relative', overflow: 'hidden' }}>
+            <div
+              className="project-thumb"
+              style={{ position: 'relative', overflow: 'hidden' }}
+            >
               {project.image ? (
                 <img
                   src={project.image}
                   alt={`Preview ${project.name}`}
-                  className="project-thumb-img"
                   style={{
                     position: 'absolute',
                     inset: 0,
                     width: '100%',
                     height: '100%',
                     objectFit: 'contain',
-                    objectPosition: 'center center',
+                    objectPosition: 'center',
                     display: 'block',
                     transition: 'transform 0.5s ease',
                   }}
@@ -88,9 +90,8 @@ function Projek() {
                   }}
                 />
               ) : null}
-              {/* Emoji fallback — ditampilkan jika tidak ada gambar atau gambar error */}
+              {/* Emoji fallback */}
               <span
-                className="project-thumb-emoji"
                 style={{
                   display: project.image ? 'none' : 'flex',
                   width: '100%',
