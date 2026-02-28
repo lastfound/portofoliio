@@ -577,127 +577,19 @@ h1,h2,h3,h4 { font-weight: 800; letter-spacing: -0.025em; }
   clip-path: polygon(16px 0%, 100% 0%, calc(100% - 16px) 100%, 0% 100%);
 }
 
-/* HUD scan line — idle loop (pelan, subtle) */
-.avatar-scan {
-  position: absolute; top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  z-index: 8;
-  box-shadow: 0 0 8px var(--accent), 0 0 20px rgba(0,255,231,0.4);
-  opacity: 0;
-  pointer-events: none;
-}
 
-/* State: scanning aktif (ditambah via JS saat masuk viewport) */
-.avatar-frame.scanning .avatar-scan {
-  animation: scan-reveal 1.6s cubic-bezier(0.4,0,0.2,1) forwards;
-}
 
-/* State: setelah scan selesai — idle loop pelan */
-.avatar-frame.scan-done .avatar-scan {
-  animation: scan-idle 4s linear infinite;
-  opacity: 0.5;
-}
-
-@keyframes scan-reveal {
-  0%   { top: 0%;   opacity: 0; }
-  5%   { opacity: 1; }
-  85%  { opacity: 1; }
-  100% { top: 100%; opacity: 0; }
-}
-
-@keyframes scan-idle {
-  0%   { top: 0%;   opacity: 0; }
-  8%   { opacity: 0.5; }
-  88%  { opacity: 0.4; }
-  100% { top: 100%; opacity: 0; }
-}
-
-/* Foto — dimulai tersembunyi, di-reveal bersamaan dengan scan */
+/* ── Avatar photo & inner glow ── */
 .avatar-photo {
-  clip-path: inset(100% 0 0 0); /* tersembunyi dari bawah */
-  transition: clip-path 0s;     /* dikendalikan JS */
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 150%;
+  object-fit: cover; object-position: center top;
+  z-index: 3;
+  filter: saturate(0.85) contrast(1.05);
+  transition: filter 0.4s ease;
 }
-
-/* Saat scanning — foto terbuka dari atas mengikuti garis scan */
-.avatar-frame.scanning .avatar-photo {
-  animation: photo-reveal 1.6s cubic-bezier(0.4,0,0.2,1) forwards;
-}
-
-/* Setelah selesai — foto penuh terlihat */
-.avatar-frame.scan-done .avatar-photo {
-  clip-path: inset(0 0 0 0) !important;
-  animation: none;
-}
-
-@keyframes photo-reveal {
-  0%   { clip-path: inset(100% 0 0 0); }
-  100% { clip-path: inset(0% 0 0 0);   }
-}
-
-/* Overlay cahaya scan — kilatan saat scan lewat */
-.avatar-scan-overlay {
-  position: absolute; inset: 0; z-index: 7;
-  background: linear-gradient(
-    to bottom,
-    rgba(0,255,231,0.0)  0%,
-    rgba(0,255,231,0.08) 48%,
-    rgba(0,255,231,0.18) 50%,
-    rgba(0,255,231,0.08) 52%,
-    rgba(0,255,231,0.0)  100%
-  );
-  background-size: 100% 200%;
-  background-position: 0% 0%;
-  opacity: 0;
-  pointer-events: none;
-}
-.avatar-frame.scanning .avatar-scan-overlay {
-  animation: overlay-sweep 1.6s cubic-bezier(0.4,0,0.2,1) forwards;
-}
-@keyframes overlay-sweep {
-  0%   { background-position: 0% -100%; opacity: 0; }
-  5%   { opacity: 1; }
-  85%  { opacity: 1; }
-  100% { background-position: 0% 200%; opacity: 0; }
-}
-
-/* Grid lines yang terbuka mengikuti scan */
-.avatar-scan-grid {
-  position: absolute; inset: 0; z-index: 6;
-  background-image:
-    linear-gradient(rgba(0,255,231,0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,255,231,0.06) 1px, transparent 1px);
-  background-size: 20px 20px;
-  clip-path: inset(100% 0 0 0);
-  pointer-events: none;
-  transition: none;
-}
-.avatar-frame.scanning .avatar-scan-grid {
-  animation: grid-reveal 1.6s cubic-bezier(0.4,0,0.2,1) forwards;
-}
-.avatar-frame.scan-done .avatar-scan-grid {
-  clip-path: inset(0 0 0 0);
-  opacity: 0.4;
-}
-@keyframes grid-reveal {
-  0%   { clip-path: inset(100% 0 0 0); }
-  100% { clip-path: inset(0% 0 0 0);   }
-}
-
-/* Teks status di bawah — muncul setelah scan */
-.avatar-scan-status {
-  position: absolute; bottom: 50px; left: 0; right: 0; z-index: 9;
-  display: flex; justify-content: center;
-  font-family: var(--font-mono); font-size: 0.5rem;
-  color: var(--accent); letter-spacing: 0.2em;
-  opacity: 0; pointer-events: none;
-}
-.avatar-frame.scan-done .avatar-scan-status {
-  animation: status-appear 0.4s ease 0.1s forwards;
-}
-@keyframes status-appear {
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 0.7; transform: translateY(0); }
+.avatar-frame:hover .avatar-photo {
+  filter: saturate(1.1) contrast(1.05) brightness(1.05);
 }
 
 /* Inner glow */
@@ -708,21 +600,6 @@ h1,h2,h3,h4 { font-weight: 800; letter-spacing: -0.025em; }
   pointer-events: none;
 }
 
-.avatar-photo {
-  position: absolute;
-  margin-top: 60%;
-  width: 100%; height: 150%;
-  object-fit: cover;
-  object-position: center bottom;
-  z-index: 1;
-  filter: saturate(0.7) contrast(1.1) brightness(0.9);
-  transition: filter 0.4s ease;
-  mix-blend-mode: luminosity;
-}
-.avatar-frame:hover .avatar-photo {
-  filter: saturate(1) contrast(1.1) brightness(1);
-  mix-blend-mode: normal;
-}
 
 /* Gradient overlay on photo */
 .avatar-frame::after {
