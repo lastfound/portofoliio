@@ -32,9 +32,9 @@ function Tentang() {
   const sectionRef = useRef(null);
   const avatarRef  = useRef(null);
   const leftRef    = useRef(null);
-  const rightRef   = useRef(null);
   const [imgError, setImgError] = useState(false);
   const [avatarVisible, setAvatarVisible] = useState(false);
+  const [scanPhase, setScanPhase] = useState('idle'); // idle | scanning | done
 
   const isTouch = useRef(
     typeof window !== 'undefined'
@@ -63,22 +63,28 @@ function Tentang() {
     if (glare) glare.style.opacity = '0';
   }, []);
 
-  // Animasi masuk — avatar SELALU muncul setelah timeout singkat
   useEffect(() => {
-    // Kiri: pakai IntersectionObserver
+    // Animasi kiri (teks)
     const obsLeft = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) leftRef.current?.classList.add('visible'); },
       { threshold: 0, rootMargin: '0px 0px -10px 0px' }
     );
     if (leftRef.current) obsLeft.observe(leftRef.current);
 
-    // Avatar (kanan): gunakan timeout sebagai fallback agar PASTI muncul
-    // tidak bergantung pada IntersectionObserver yang bisa gagal di mobile
-    const timer = setTimeout(() => setAvatarVisible(true), 350);
+    // Avatar muncul setelah 300ms
+    const t1 = setTimeout(() => setAvatarVisible(true), 300);
+
+    // Scan trigger: mulai scan 200ms setelah avatar visible
+    const t2 = setTimeout(() => {
+      setScanPhase('scanning');
+      // Setelah durasi animasi scan (1.6s), pindah ke fase done
+      setTimeout(() => setScanPhase('done'), 1650);
+    }, 500);
 
     return () => {
       obsLeft.disconnect();
-      clearTimeout(timer);
+      clearTimeout(t1);
+      clearTimeout(t2);
     };
   }, []);
 
@@ -151,12 +157,20 @@ function Tentang() {
 
           <div
             ref={avatarRef}
-            className="avatar-frame corner-frame"
+            className={`avatar-frame corner-frame ${scanPhase === 'scanning' ? 'scanning' : ''} ${scanPhase === 'done' ? 'scan-done' : ''}`}
             onMouseMove={handleAvatarMouseMove}
             onMouseLeave={handleAvatarMouseLeave}
             style={{ transformStyle: 'preserve-3d', transition: 'transform 0.12s ease-out' }}
           >
+            {/* Garis scan utama */}
             <div className="avatar-scan" />
+
+            {/* Overlay cahaya yang ikut bergerak */}
+            <div className="avatar-scan-overlay" />
+
+            {/* Grid yang terbuka mengikuti scan */}
+            <div className="avatar-scan-grid" />
+
             <div className="avatar-inner-glow" />
 
             {hasPhoto && (
@@ -173,6 +187,9 @@ function Tentang() {
             </div>
 
             <div className="avatar-sub">{PROFILE.avatarSub}</div>
+
+            {/* Status teks yang muncul setelah scan selesai */}
+            <div className="avatar-scan-status">IDENTITY VERIFIED</div>
 
             {!isTouch && (
               <div className="avatar-glare" style={{
