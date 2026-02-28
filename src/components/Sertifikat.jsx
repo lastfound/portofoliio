@@ -1,37 +1,25 @@
 import React, { useEffect, useRef } from 'react';
 
-// ─────────────────────────────────────────────────────────────
-// Import gambar sertifikat dari src/assets/
-// Contoh:
-//   import imgCert1 from '../assets/cert-dicoding.png';
-//   import imgCert2 from '../assets/cert-coursera.png';
-// Lalu isi field image: imgCert1, dst.
-// Jika image: null → icon emoji tetap tampil sebagai fallback.
-// ─────────────────────────────────────────────────────────────
-
-// import imgCert1 from '../assets/cert-dicoding.png';
-// import imgCert2 from '../assets/cert-coursera.png';
-
 const CERTIFICATES = [
   {
     id: 'cert-01', icon: '🏆',
-    image: null,              // ← ganti: imgCert1
+    image: null,
     issuer: 'Dicoding Indonesia',
     name: 'Belajar Dasar Pemrograman Web',
     date: 'Diterbitkan: Januari 2024 • Berlaku Selamanya',
     desc: 'Menguasai dasar-dasar pengembangan web mencakup HTML5 semantik, CSS3 modern, dan JavaScript ES6+.',
     verified: true,
-    link: '#',                // ← isi link verifikasi sertifikat
+    link: '#',
   },
   {
     id: 'cert-02', icon: '🎓',
-    image: null,              // ← ganti: imgCert2
+    image: null,
     issuer: 'Coursera — Meta',
     name: 'Front-End Developer Professional',
     date: 'Diterbitkan: Maret 2024 • Berlaku Selamanya',
     desc: 'Program profesional komprehensif mencakup React.js, UX/UI Design, dan praktik pengembangan web modern.',
     verified: true,
-    link: '#',                // ← isi link verifikasi sertifikat
+    link: '#',
   },
 ];
 
@@ -70,7 +58,7 @@ function Sertifikat() {
         {CERTIFICATES.map((cert) => (
           <div className="cert-card stagger-child" key={cert.id}>
 
-            {/* ── Thumbnail Gambar Sertifikat ── */}
+            {/* Thumbnail */}
             <div
               style={{
                 width: '100%',
@@ -102,7 +90,6 @@ function Sertifikat() {
                   }}
                 />
               ) : null}
-              {/* Emoji fallback */}
               <span
                 style={{
                   display: cert.image ? 'none' : 'flex',
@@ -115,9 +102,10 @@ function Sertifikat() {
               >
                 {cert.icon}
               </span>
+              <div className="cert-shimmer" />
             </div>
 
-            {/* ── Info Sertifikat ── */}
+            {/* Info */}
             <div className="cert-header">
               <div>
                 <div className="cert-issuer">{cert.issuer}</div>
@@ -130,13 +118,7 @@ function Sertifikat() {
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '0.8rem' }}>
                 {cert.verified && <span className="cert-badge">✓ Terverifikasi</span>}
                 {cert.link && cert.link !== '#' && (
-                  <a
-                    href={cert.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="project-link"
-                    style={{ fontSize: '0.68rem' }}
-                  >
+                  <a href={cert.link} target="_blank" rel="noopener noreferrer" className="project-link" style={{ fontSize: '0.68rem' }}>
                     Lihat Sertifikat →
                   </a>
                 )}

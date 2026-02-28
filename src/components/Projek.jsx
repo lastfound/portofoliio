@@ -70,6 +70,8 @@ function Projek() {
               className="project-thumb"
               style={{ position: 'relative', overflow: 'hidden' }}
             >
+              <div className="project-thumb-depth" />
+
               {project.image ? (
                 <img
                   src={project.image}
@@ -90,7 +92,6 @@ function Projek() {
                   }}
                 />
               ) : null}
-              {/* Emoji fallback */}
               <span
                 style={{
                   display: project.image ? 'none' : 'flex',
