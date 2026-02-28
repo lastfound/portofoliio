@@ -1250,12 +1250,12 @@ h1,h2,h3,h4 { font-weight: 800; letter-spacing: -0.025em; }
     width: 100%;
   }
 
-  /* Avatar wrapper — ukuran tetap, tidak overflow */
+  /* Avatar wrapper — ukuran tetap, overflow visible agar badge tidak terpotong */
   .avatar-wrapper {
     position: relative;
     width: 240px;
     height: 300px;
-    flex-shrink: 0;
+    overflow: visible;
   }
 
   /* Avatar frame — hapus clip-path diagonal agar tidak terpotong */
@@ -1270,8 +1270,15 @@ h1,h2,h3,h4 { font-weight: 800; letter-spacing: -0.025em; }
   /* Orbit rings tidak perlu — mencegah overflow layar */
   .avatar-orbit { display: none !important; }
 
-  /* Badge — sembunyikan agar tidak keluar layar */
-  .floating-badge { display: none !important; }
+  /* Badge — tampilkan tapi posisi lebih dekat agar tidak overflow */
+  .floating-badge {
+    display: block !important;
+    font-size: 0.52rem;
+    padding: 0.35rem 0.75rem;
+    white-space: nowrap;
+  }
+  .floating-badge.top    { top: -14px; right: -10px; left: auto; }
+  .floating-badge.bottom { bottom: -14px; left: -10px; right: auto; }
 
   /* Teks hero */
   .hero-label     { justify-content: center; }

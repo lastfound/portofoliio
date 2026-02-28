@@ -190,17 +190,13 @@ function Tentang() {
             <span className="corner br" />
           </div>
 
-          {/* Floating badges — desktop only */}
-          {!isTouch && (
-            <>
-              <div className="floating-badge top">
-                ⚡ <span className="hl">React + Node.js</span>
-              </div>
-              <div className="floating-badge bottom">
-                Status: <span className="hl">Open to Work</span>
-              </div>
-            </>
-          )}
+          {/* Floating badges — semua device */}
+          <div className="floating-badge top">
+            ⚡ <span className="hl">React + Node.js</span>
+          </div>
+          <div className="floating-badge bottom">
+            Status: <span className="hl">Open to Work</span>
+          </div>
         </div>
       </div>
     </section>
