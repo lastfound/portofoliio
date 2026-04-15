@@ -5,17 +5,17 @@ import RippleButton from './RippleButton';
 import AvatarHologram from './AvatarHologram';
 
 const PROFILE = {
-  label:     'Portfolio',
+  label:     'Portfolio — 2025',
   firstName: 'Rafi',
   lastName:  'Ibrahim',
-  roles: ['Full Stack Web Developer','UI / UX Designer','React Developer','Front-End Engineer'],
-  bio: 'Saya membangun pengalaman digital yang indah dan fungsional. Berfokus pada antarmuka modern yang menggabungkan estetika futuristik dengan performa tinggi dan pengalaman pengguna yang intuitif.',
+  roles: ['Full Stack Developer', 'UI / UX Designer', 'React Developer', 'Front-End Engineer'],
+  bio: 'I build beautiful, functional digital experiences — combining modern interfaces with high performance and intuitive UX.',
   stats: [
-    { num: '3+',   label: 'Proyek Selesai' },
-    { num: '2+',   label: 'Sertifikat'     },
-    { num: '100%', label: 'Dedikasi'       },
+    { num: '3+',   label: 'Projects' },
+    { num: '2+',   label: 'Certs'    },
+    { num: '100%', label: 'Dedicated' },
   ],
-  skills: ['HTML5','CSS3','JavaScript','React','Next.js','Solid.js','Node.js','Git','MySQL','MongoDB','Figma','Adobe Illustrator'],
+  skills: ['HTML5', 'CSS3', 'JavaScript', 'React', 'Next.js', 'Node.js', 'Git', 'MySQL', 'MongoDB', 'Figma'],
   initials:  'RI',
   avatarSub: 'Web Developer',
   photo:     profilImg,
@@ -33,7 +33,6 @@ function Tentang() {
       : false
   ).current;
 
-  // 3D tilt (desktop only)
   const handleMouseMove = useCallback((e) => {
     if (isTouch) return;
     const el = avatarRef.current;
@@ -41,7 +40,7 @@ function Tentang() {
     const rect = el.getBoundingClientRect();
     const dx = (e.clientX - (rect.left + rect.width  / 2)) / (rect.width  / 2);
     const dy = (e.clientY - (rect.top  + rect.height / 2)) / (rect.height / 2);
-    el.style.transform = `perspective(800px) rotateX(${dy * -12}deg) rotateY(${dx * 12}deg) scale3d(1.02,1.02,1.02)`;
+    el.style.transform = `perspective(1000px) rotateX(${dy * -6}deg) rotateY(${dx * 6}deg) scale3d(1.01,1.01,1.01)`;
   }, [isTouch]);
 
   const handleMouseLeave = useCallback(() => {
@@ -49,14 +48,11 @@ function Tentang() {
   }, []);
 
   useEffect(() => {
-    // Teks kiri
     const obs = new IntersectionObserver(
       ([e]) => { if (e.isIntersecting) leftRef.current?.classList.add('visible'); },
       { threshold: 0, rootMargin: '0px 0px -10px 0px' }
     );
     if (leftRef.current) obs.observe(leftRef.current);
-
-    // Avatar muncul setelah 200ms (pasti, tidak bergantung observer)
     const t = setTimeout(() => setAvatarVisible(true), 200);
     return () => { obs.disconnect(); clearTimeout(t); };
   }, []);
@@ -66,7 +62,7 @@ function Tentang() {
   return (
     <section id="tentang" className="section tentang">
 
-      {/* ══ KIRI ══ */}
+      {/* ══ LEFT ══ */}
       <div className="hero-left reveal" ref={leftRef}>
         <div className="hero-label">{PROFILE.label}</div>
 
@@ -77,7 +73,7 @@ function Tentang() {
 
         <p className="hero-role">
           {'// '}
-          <TypingText texts={PROFILE.roles} speed={75} deleteSpeed={35} pause={2000} />
+          <TypingText texts={PROFILE.roles} speed={75} deleteSpeed={35} pause={2200} />
         </p>
 
         <p className="hero-bio">{PROFILE.bio}</p>
@@ -96,48 +92,32 @@ function Tentang() {
         </div>
 
         <RippleButton
-          onClick={() => document.getElementById('projek')?.scrollIntoView({ behavior:'smooth' })}
+          onClick={() => document.getElementById('projek')?.scrollIntoView({ behavior: 'smooth' })}
           className="btn"
         >
-          Lihat Proyek →
+          View Work →
         </RippleButton>
       </div>
 
-      {/* ══ KANAN — Avatar Hologram ══ */}
+      {/* ══ RIGHT — Avatar ══ */}
       <div
         className="hero-visual"
         style={{
           display: 'flex', justifyContent: 'center', alignItems: 'center',
           opacity: avatarVisible ? 1 : 0,
-          transform: avatarVisible ? 'none' : 'translateY(20px)',
-          transition: 'opacity 0.6s ease, transform 0.6s ease',
+          transform: avatarVisible ? 'none' : 'translateY(16px)',
+          transition: 'opacity 0.7s ease, transform 0.7s ease',
         }}
       >
         <div className="avatar-wrapper">
-
-          {/* Orbit rings (desktop only) */}
-          {!isTouch && (
-            <>
-              <div className="avatar-orbit orbit-1" />
-              <div className="avatar-orbit orbit-2" />
-              <div className="avatar-orbit orbit-3" />
-            </>
-          )}
-
-          {/* Frame luar dengan 3D tilt */}
           <div
             ref={avatarRef}
-            className="avatar-frame corner-frame"
+            className="avatar-frame"
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            style={{ transformStyle:'preserve-3d', transition:'transform 0.12s ease-out', overflow:'hidden' }}
+            style={{ transformStyle: 'preserve-3d', transition: 'transform 0.15s ease-out', overflow: 'hidden' }}
           >
-            {/* ── HOLOGRAM COMPONENT ── */}
-            <AvatarHologram
-              hasPhoto={hasPhoto}
-              initials={PROFILE.initials}
-            >
-              {/* Foto diteruskan sebagai children */}
+            <AvatarHologram hasPhoto={hasPhoto} initials={PROFILE.initials}>
               <img
                 src={PROFILE.photo}
                 alt={`${PROFILE.firstName} ${PROFILE.lastName}`}
@@ -145,20 +125,13 @@ function Tentang() {
                   position: 'absolute', top: 0, left: 0,
                   width: '100%', height: '150%',
                   objectFit: 'cover', objectPosition: 'center top',
-                  filter: 'saturate(0.85) contrast(1.05)',
+                  filter: 'grayscale(15%) contrast(1.02)',
                 }}
                 onError={() => setImgError(true)}
               />
             </AvatarHologram>
 
-            {/* Avatar sub label */}
             <div className="avatar-sub">{PROFILE.avatarSub}</div>
-
-            {/* Corner brackets */}
-            <span className="corner tl" />
-            <span className="corner tr" />
-            <span className="corner bl" />
-            <span className="corner br" />
           </div>
 
           {/* Floating badges */}

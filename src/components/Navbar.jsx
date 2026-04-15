@@ -6,10 +6,10 @@ function Navbar() {
   const [menuOpen, setMenuOpen]    = useState(false);
 
   const navLinks = [
-    { id: 'tentang',    label: 'Tentang',    num: '01' },
-    { id: 'projek',     label: 'Projek',     num: '02' },
-    { id: 'sertifikat', label: 'Sertifikat', num: '03' },
-    { id: 'kontak',     label: 'Kontak',     num: '04' },
+    { id: 'tentang',    label: 'About',    num: '01' },
+    { id: 'projek',     label: 'Work',     num: '02' },
+    { id: 'sertifikat', label: 'Certs',    num: '03' },
+    { id: 'kontak',     label: 'Contact',  num: '04' },
   ];
 
   useEffect(() => {
@@ -44,7 +44,7 @@ function Navbar() {
           className="navbar-logo"
           onClick={(e) => { e.preventDefault(); scrollTo('tentang'); }}
         >
-          DEV<span>.folio</span>
+          Rafi<span> Ibrahim</span>
         </a>
 
         <ul className="navbar-links">
@@ -52,7 +52,6 @@ function Navbar() {
             <li key={link.id}>
               <a
                 href={`#${link.id}`}
-                data-num={link.num}
                 className={activeSection === link.id ? 'active' : ''}
                 onClick={(e) => { e.preventDefault(); scrollTo(link.id); }}
               >
@@ -64,7 +63,7 @@ function Navbar() {
 
         <div className="navbar-status">
           <div className="status-dot" />
-          Tersedia untuk kolaborasi
+          Available
         </div>
 
         <button
@@ -76,72 +75,54 @@ function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile menu overlay */}
+      {/* Mobile overlay */}
       <div
         style={{
           position: 'fixed', inset: 0, zIndex: 997,
           display: 'flex', flexDirection: 'column',
           alignItems: 'center', justifyContent: 'center',
-          background: 'rgba(2,4,12,0.97)',
-          backdropFilter: 'blur(24px)',
-          WebkitBackdropFilter: 'blur(24px)',
+          background: '#f9f8f6',
           opacity: menuOpen ? 1 : 0,
           pointerEvents: menuOpen ? 'all' : 'none',
-          transition: 'opacity 0.35s ease',
+          transition: 'opacity 0.3s ease',
         }}
         onClick={(e) => { if (e.target === e.currentTarget) setMenuOpen(false); }}
       >
         <button
           onClick={() => setMenuOpen(false)}
-          aria-label="Tutup menu"
+          aria-label="Close menu"
           style={{
             position: 'absolute', top: '1.4rem', right: '1.5rem',
             background: 'none', border: 'none',
-            color: 'var(--text)', fontSize: '1.4rem',
-            cursor: 'pointer', lineHeight: 1, padding: '0.3rem', zIndex: 999,
+            color: '#1a1a1a', fontSize: '1.1rem',
+            cursor: 'pointer', padding: '0.3rem', zIndex: 999,
+            fontFamily: "'DM Sans', sans-serif", fontWeight: 300,
           }}
         >✕</button>
 
-        {/* Decorative HUD lines */}
-        <div style={{
-          position: 'absolute', top: '50%', left: '2rem',
-          width: '1px', height: '40%', transform: 'translateY(-50%)',
-          background: 'linear-gradient(to bottom, transparent, rgba(0,255,231,0.15), transparent)',
-        }} />
-        <div style={{
-          position: 'absolute', top: '50%', right: '2rem',
-          width: '1px', height: '40%', transform: 'translateY(-50%)',
-          background: 'linear-gradient(to bottom, transparent, rgba(0,255,231,0.15), transparent)',
-        }} />
-
         <ul style={{
           listStyle: 'none', padding: 0, margin: 0,
-          display: 'flex', flexDirection: 'column', gap: '2.2rem', textAlign: 'center',
+          display: 'flex', flexDirection: 'column',
+          gap: '2.5rem', textAlign: 'center',
         }}>
           {navLinks.map((link, i) => (
             <li key={link.id} style={{
               opacity: menuOpen ? 1 : 0,
-              transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
-              transition: `opacity 0.3s ease ${i*0.07+0.1}s, transform 0.3s ease ${i*0.07+0.1}s`,
+              transform: menuOpen ? 'translateY(0)' : 'translateY(16px)',
+              transition: `opacity 0.3s ease ${i * 0.06 + 0.05}s, transform 0.3s ease ${i * 0.06 + 0.05}s`,
             }}>
               <a
                 href={`#${link.id}`}
                 onClick={(e) => { e.preventDefault(); scrollTo(link.id); }}
                 style={{
-                  display: 'inline-flex', alignItems: 'center', gap: '1rem',
-                  fontSize: '1.5rem',
-                  fontFamily: 'var(--font-main)', fontWeight: 700,
-                  letterSpacing: '0.03em',
-                  color: activeSection === link.id ? 'var(--accent)' : 'var(--text)',
-                  textDecoration: 'none', transition: 'color 0.2s',
+                  fontFamily: "'DM Serif Display', Georgia, serif",
+                  fontSize: '2rem',
+                  fontWeight: 400,
+                  color: activeSection === link.id ? '#6b5b4e' : '#1a1a1a',
+                  textDecoration: 'none',
+                  letterSpacing: '-0.01em',
                 }}
               >
-                <span style={{
-                  fontFamily: 'var(--font-mono)', fontSize: '0.6rem',
-                  color: 'var(--accent)', opacity: 0.5, letterSpacing: '0.15em',
-                }}>
-                  {link.num}
-                </span>
                 {link.label}
               </a>
             </li>
@@ -151,12 +132,14 @@ function Navbar() {
         <div style={{
           position: 'absolute', bottom: '2.5rem',
           display: 'flex', alignItems: 'center', gap: '0.5rem',
-          fontSize: '0.7rem', fontFamily: 'var(--font-mono)',
-          color: 'var(--text-dim)',
-          opacity: menuOpen ? 1 : 0, transition: 'opacity 0.3s ease 0.4s',
+          fontSize: '0.62rem', fontFamily: "'DM Sans', sans-serif",
+          letterSpacing: '0.16em', textTransform: 'uppercase',
+          color: '#9e9b94', fontWeight: 400,
+          opacity: menuOpen ? 1 : 0,
+          transition: 'opacity 0.3s ease 0.35s',
         }}>
           <div className="status-dot" />
-          Tersedia untuk kolaborasi
+          Available for collaboration
         </div>
       </div>
     </>

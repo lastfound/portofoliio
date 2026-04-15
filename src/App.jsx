@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import './styles/global.css';
 
 import LoadingScreen    from './components/LoadingScreen';
@@ -14,14 +14,15 @@ import Particles        from './components/Particles';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
+  const handleComplete = useCallback(() => setLoaded(true), []);
 
   return (
     <>
-      {!loaded && <LoadingScreen onComplete={() => setLoaded(true)} />}
+      {!loaded && <LoadingScreen onComplete={handleComplete} />}
 
       <div style={{
         opacity: loaded ? 1 : 0,
-        transition: 'opacity 0.5s ease 0.1s',
+        transition: 'opacity 0.5s ease',
         visibility: loaded ? 'visible' : 'hidden',
       }}>
         <div id="scroll-progress" />

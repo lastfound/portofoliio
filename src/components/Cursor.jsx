@@ -6,7 +6,6 @@ function Cursor() {
   const [hovered, setHovered]   = useState(false);
   const [visible, setVisible]   = useState(false);
   const [isTouch, setIsTouch]   = useState(
-    // cek langsung saat pertama render supaya tidak ada flash cursor di HP
     () => window.matchMedia('(hover: none) and (pointer: coarse)').matches
   );
   const mousePos     = useRef({ x: 0, y: 0 });
@@ -33,8 +32,8 @@ function Cursor() {
     };
 
     const animateTrail = () => {
-      trailPos.current.x += (mousePos.current.x - trailPos.current.x) * 0.14;
-      trailPos.current.y += (mousePos.current.y - trailPos.current.y) * 0.14;
+      trailPos.current.x += (mousePos.current.x - trailPos.current.x) * 0.12;
+      trailPos.current.y += (mousePos.current.y - trailPos.current.y) * 0.12;
       if (trailRef.current) {
         trailRef.current.style.left = trailPos.current.x + 'px';
         trailRef.current.style.top  = trailPos.current.y + 'px';
@@ -66,7 +65,6 @@ function Cursor() {
     };
   }, [isTouch]);
 
-  // Hilang total di perangkat sentuh / HP
   if (isTouch) return null;
 
   return (

@@ -7,7 +7,6 @@ function Particles() {
     const canvas = canvasRef.current;
     const ctx    = canvas.getContext('2d');
     let animId;
-    let particles = [];
 
     const resize = () => {
       canvas.width  = window.innerWidth;
@@ -16,34 +15,30 @@ function Particles() {
     resize();
     window.addEventListener('resize', resize);
 
-    // Buat partikel
-    const count = Math.min(80, Math.floor(window.innerWidth / 16));
-    for (let i = 0; i < count; i++) {
-      particles.push({
-        x:      Math.random() * canvas.width,
-        y:      Math.random() * canvas.height,
-        vx:     (Math.random() - 0.5) * 0.35,
-        vy:     (Math.random() - 0.5) * 0.35,
-        radius: Math.random() * 1.5 + 0.3,
-        alpha:  Math.random() * 0.5 + 0.1,
-        // Warna: cyan atau ungu secara acak
-        color:  Math.random() > 0.6 ? '0,245,255' : '123,94,167',
-      });
-    }
+    // Sparse, very subtle floating particles
+    const count = Math.min(30, Math.floor(window.innerWidth / 40));
+    const particles = Array.from({ length: count }, () => ({
+      x:      Math.random() * canvas.width,
+      y:      Math.random() * canvas.height,
+      vx:     (Math.random() - 0.5) * 0.18,
+      vy:     (Math.random() - 0.5) * 0.18,
+      radius: Math.random() * 1.2 + 0.4,
+      alpha:  Math.random() * 0.12 + 0.04,
+    }));
 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Gambar garis antar partikel yang berdekatan
+      // Subtle connecting lines only at short range
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx   = particles[i].x - particles[j].x;
           const dy   = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
+          const dist = Math.hypot(dx, dy);
+          if (dist < 90) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(0,245,255,${0.06 * (1 - dist / 120)})`;
-            ctx.lineWidth   = 0.5;
+            ctx.strokeStyle = `rgba(107, 91, 78, ${0.04 * (1 - dist / 90)})`;
+            ctx.lineWidth = 0.5;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
             ctx.stroke();
@@ -51,28 +46,17 @@ function Particles() {
         }
       }
 
-      // Gambar partikel
       particles.forEach(p => {
-        // Update posisi
         p.x += p.vx;
         p.y += p.vy;
-
-        // Wrap around
         if (p.x < 0) p.x = canvas.width;
         if (p.x > canvas.width) p.x = 0;
         if (p.y < 0) p.y = canvas.height;
         if (p.y > canvas.height) p.y = 0;
 
-        // Gambar titik
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${p.color},${p.alpha})`;
-        ctx.fill();
-
-        // Glow kecil
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius * 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${p.color},${p.alpha * 0.15})`;
+        ctx.fillStyle = `rgba(107, 91, 78, ${p.alpha})`;
         ctx.fill();
       });
 
@@ -91,11 +75,9 @@ function Particles() {
     <canvas
       ref={canvasRef}
       style={{
-        position: 'fixed',
-        inset: 0,
-        zIndex: 0,
-        pointerEvents: 'none',
-        opacity: 0.7,
+        position: 'fixed', inset: 0,
+        zIndex: 0, pointerEvents: 'none',
+        opacity: 0.6,
       }}
     />
   );

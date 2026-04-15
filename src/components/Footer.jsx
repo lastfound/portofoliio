@@ -4,8 +4,8 @@ function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer className="footer">
-      <span>© {year} Rafi Ibrahim. All rights reserved.</span>
-      <span className="footer-accent">Siap untuk proyek baru </span>
+      <span>© {year} Rafi Ibrahim</span>
+      <span className="footer-accent">Open to new projects</span>
     </footer>
   );
 }
