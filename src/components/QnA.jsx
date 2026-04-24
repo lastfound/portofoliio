@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const AI_BACKEND_URL = import.meta.env.VITE_AI_BACKEND_URL || '/api/ai';
+const AI_BACKEND_URL = "https://backendapirafi.vercel.app/api/ai"; // Ganti dengan URL backend kamu jika berbeda
 
 const LOCAL_FALLBACK = (question) => {
   const text = question.toLowerCase();
