@@ -11,6 +11,7 @@ import Kontak           from './components/Kontak';
 import Footer           from './components/Footer';
 import ScrollAnimator   from './components/ScrollAnimator';
 import Particles        from './components/Particles';
+import AIWidget         from './components/AIWidget';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -37,6 +38,7 @@ function App() {
           <Kontak />
         </main>
         <Footer />
+        <AIWidget />
       </div>
     </>
   );

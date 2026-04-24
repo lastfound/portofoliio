@@ -3,15 +3,11 @@ import React, { useState, useEffect, useRef } from 'react';
 function LoadingScreen({ onComplete }) {
   const [progress, setProgress] = useState(0);
   const [fadeOut, setFadeOut]   = useState(false);
-  const ran = useRef(false);
   const onCompleteRef = useRef(onComplete);
 
   useEffect(() => { onCompleteRef.current = onComplete; }, [onComplete]);
 
   useEffect(() => {
-    if (ran.current) return;
-    ran.current = true;
-
     let current = 0;
     const interval = setInterval(() => {
       const step = current < 40  ? 2.8

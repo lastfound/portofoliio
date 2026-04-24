@@ -6,10 +6,11 @@ function Navbar() {
   const [menuOpen, setMenuOpen]    = useState(false);
 
   const navLinks = [
-    { id: 'tentang',    label: 'About',    num: '01' },
-    { id: 'projek',     label: 'Work',     num: '02' },
-    { id: 'sertifikat', label: 'Certs',    num: '03' },
-    { id: 'kontak',     label: 'Contact',  num: '04' },
+    { id: 'tentang',     label: 'About',    num: '01' },
+    { id: 'projek',      label: 'Work',     num: '02' },
+    { id: 'tanya-jawab', label: 'AI Bot',   num: '03' },
+    { id: 'sertifikat',  label: 'Certs',    num: '04' },
+    { id: 'kontak',      label: 'Contact',  num: '05' },
   ];
 
   useEffect(() => {
