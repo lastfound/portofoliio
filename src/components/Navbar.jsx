@@ -86,6 +86,8 @@ function Navbar() {
           opacity: menuOpen ? 1 : 0,
           pointerEvents: menuOpen ? 'all' : 'none',
           transition: 'opacity 0.3s ease',
+          overflow: 'auto',
+          padding: '1rem',
         }}
         onClick={(e) => { if (e.target === e.currentTarget) setMenuOpen(false); }}
       >
@@ -93,9 +95,9 @@ function Navbar() {
           onClick={() => setMenuOpen(false)}
           aria-label="Close menu"
           style={{
-            position: 'absolute', top: '1.4rem', right: '1.5rem',
+            position: 'absolute', top: '0.8rem', right: '0.8rem',
             background: 'none', border: 'none',
-            color: '#1a1a1a', fontSize: '1.1rem',
+            color: '#1a1a1a', fontSize: '1rem',
             cursor: 'pointer', padding: '0.3rem', zIndex: 999,
             fontFamily: "'DM Sans', sans-serif", fontWeight: 300,
           }}
@@ -104,7 +106,9 @@ function Navbar() {
         <ul style={{
           listStyle: 'none', padding: 0, margin: 0,
           display: 'flex', flexDirection: 'column',
-          gap: '2.5rem', textAlign: 'center',
+          gap: 'clamp(1.5rem, 4vw, 2.5rem)', textAlign: 'center',
+          marginTop: '2rem',
+          width: '100%',
         }}>
           {navLinks.map((link, i) => (
             <li key={link.id} style={{
@@ -117,11 +121,13 @@ function Navbar() {
                 onClick={(e) => { e.preventDefault(); scrollTo(link.id); }}
                 style={{
                   fontFamily: "'DM Serif Display', Georgia, serif",
-                  fontSize: '2rem',
+                  fontSize: 'clamp(1.4rem, 5vw, 2rem)',
                   fontWeight: 400,
                   color: activeSection === link.id ? '#6b5b4e' : '#1a1a1a',
                   textDecoration: 'none',
                   letterSpacing: '-0.01em',
+                  display: 'block',
+                  padding: '0.5rem 0',
                 }}
               >
                 {link.label}
@@ -131,9 +137,10 @@ function Navbar() {
         </ul>
 
         <div style={{
-          position: 'absolute', bottom: '2.5rem',
+          position: 'absolute', bottom: 'clamp(1.5rem, 5vw, 2.5rem)',
           display: 'flex', alignItems: 'center', gap: '0.5rem',
-          fontSize: '0.62rem', fontFamily: "'DM Sans', sans-serif",
+          fontSize: 'clamp(0.55rem, 2vw, 0.62rem)', 
+          fontFamily: "'DM Sans', sans-serif",
           letterSpacing: '0.16em', textTransform: 'uppercase',
           color: '#9e9b94', fontWeight: 400,
           opacity: menuOpen ? 1 : 0,
