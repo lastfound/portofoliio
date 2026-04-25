@@ -824,9 +824,33 @@ h1, h2, h3, h4 {
   transition: transform 0.25s ease, background 0.25s ease;
 }
 
+.ai-floating-icon {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: #f9f8f6;
+  user-select: none;
+}
+
 .ai-floating-button:hover {
   transform: translateY(-2px);
   background: #6b5b4e;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .ai-floating-button {
+    width: 68px;
+    height: 68px;
+    right: 1.2rem;
+    bottom: 1.8rem;
+    box-shadow: 0 12px 35px rgba(26, 26, 26, 0.22);
+  }
+
+  .ai-floating-icon {
+    font-size: 1.1rem;
+  }
 }
 
 .ai-modal-backdrop {

@@ -15,7 +15,7 @@ function AIWidget() {
   return (
     <>
       <button className="ai-floating-button" onClick={() => setOpen(true)} aria-label="Buka Fora AI">
-        <span className="ai-floating-icon">🤖</span>
+        <span className="ai-floating-icon">AI</span>
       </button>
 
       {open && (
