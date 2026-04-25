@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 const AI_BACKEND_URL = "https://backendapirafi.vercel.app/api/ai"; // Ganti dengan URL backend kamu jika berbeda
 
@@ -19,6 +19,15 @@ const LOCAL_FALLBACK = (question) => {
   return 'Saya siap menjawab pertanyaan umum tentang portofolio ini. Coba tanyakan tentang skill, proyek, pengalaman, atau cara menghubungi.';
 };
 
+// Reliable scroll-to-bottom that works on mobile
+function scrollToBottom(el) {
+  if (!el) return;
+  // Use requestAnimationFrame to ensure DOM has painted
+  requestAnimationFrame(() => {
+    el.scrollTop = el.scrollHeight;
+  });
+}
+
 async function askBackend(question) {
   const response = await fetch(AI_BACKEND_URL, {
     method: 'POST',
@@ -38,7 +47,7 @@ async function askBackend(question) {
 }
 
 /* ── Typewriter text component ── */
-function TypewriterText({ text, speed = 18, onDone }) {
+function TypewriterText({ text, speed = 18, onDone, onTick }) {
   const [displayed, setDisplayed] = useState('');
   const [done, setDone] = useState(false);
   const indexRef = useRef(0);
@@ -50,6 +59,7 @@ function TypewriterText({ text, speed = 18, onDone }) {
     const interval = setInterval(() => {
       indexRef.current += 1;
       setDisplayed(text.slice(0, indexRef.current));
+      onTick?.(); // scroll on each character
       if (indexRef.current >= text.length) {
         clearInterval(interval);
         setDone(true);
@@ -90,12 +100,20 @@ function QnA({ assistantName = 'Fora', onClose }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const chatWindowRef = useRef(null);
+  const inputAreaRef = useRef(null);
 
+  // Reliable scroll helper
+  const doScroll = useCallback(() => {
+    scrollToBottom(chatWindowRef.current);
+  }, []);
+
+  // Scroll whenever messages or loading state changes
   useEffect(() => {
-    if (chatWindowRef.current) {
-      chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
-    }
-  }, [messages]);
+    doScroll();
+    // Extra delay for mobile rendering lag
+    const t = setTimeout(doScroll, 80);
+    return () => clearTimeout(t);
+  }, [messages, loading]);
 
   const handleSend = async (event) => {
     event.preventDefault();
@@ -107,6 +125,9 @@ function QnA({ assistantName = 'Fora', onClose }) {
     setQuery('');
     setError('');
     setLoading(true);
+
+    // Blur input on mobile to dismiss keyboard so the chat is visible
+    if (document.activeElement) document.activeElement.blur();
 
     try {
       const [answer] = await Promise.all([
@@ -131,6 +152,14 @@ function QnA({ assistantName = 'Fora', onClose }) {
       ]);
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Handle Enter key (Shift+Enter for newline)
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSend(e);
     }
   };
 
@@ -161,10 +190,8 @@ function QnA({ assistantName = 'Fora', onClose }) {
                   <TypewriterText
                     text={message.content}
                     speed={18}
-                    onDone={() => {
-                      if (chatWindowRef.current)
-                        chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
-                    }}
+                    onTick={doScroll}
+                    onDone={doScroll}
                   />
                 ) : (
                   <span>{message.content}</span>
@@ -195,22 +222,30 @@ function QnA({ assistantName = 'Fora', onClose }) {
               </div>
             </div>
           )}
+          {/* Anchor element to always scroll into view */}
+          <div className="qa-scroll-anchor" />
         </div>
       </div>
 
-      <form className="qa-input-area" onSubmit={handleSend}>
+      <div className="qa-input-area" ref={inputAreaRef}>
         <textarea
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Tulis pertanyaanmu di sini..."
+          onKeyDown={handleKeyDown}
+          placeholder="Tulis pertanyaanmu… (Enter untuk kirim)"
           rows={2}
         />
         <div className="qa-input-actions">
-          <button type="submit" className="btn qa-submit-button" disabled={loading}>
-            {loading ? 'Memproses...' : 'Kirim Pertanyaan'}
+          <button
+            type="button"
+            className="btn qa-submit-button"
+            disabled={loading}
+            onClick={handleSend}
+          >
+            {loading ? 'Memproses...' : 'Kirim →'}
           </button>
         </div>
-      </form>
+      </div>
 
       {error && <div className="qa-error">{error}</div>}
     </div>
