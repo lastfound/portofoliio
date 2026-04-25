@@ -99,6 +99,7 @@ function QnA({ assistantName = 'Fora', onClose }) {
   ]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [closing, setClosing] = useState(false);
   const chatWindowRef = useRef(null);
   const inputAreaRef = useRef(null);
 
@@ -107,10 +108,17 @@ function QnA({ assistantName = 'Fora', onClose }) {
     scrollToBottom(chatWindowRef.current);
   }, []);
 
+  // Animated close handler
+  const handleClose = useCallback(() => {
+    setClosing(true);
+    setTimeout(() => {
+      onClose?.();
+    }, 2000); // match animation duration
+  }, [onClose]);
+
   // Scroll whenever messages or loading state changes
   useEffect(() => {
     doScroll();
-    // Extra delay for mobile rendering lag
     const t = setTimeout(doScroll, 80);
     return () => clearTimeout(t);
   }, [messages, loading]);
@@ -120,10 +128,10 @@ function QnA({ assistantName = 'Fora', onClose }) {
     const trimmed = query.trim();
     if (!trimmed) return;
 
-    // Jika user mengetik "tutup", tutup jendela AI
+    // Jika user mengetik "tutup", tutup jendela AI dengan animasi
     if (trimmed.toLowerCase() === 'tutup') {
       setQuery('');
-      onClose?.();
+      handleClose();
       return;
     }
 
@@ -172,13 +180,24 @@ function QnA({ assistantName = 'Fora', onClose }) {
 
   return (
     <div id="tanya-jawab" className="qa-panel">
+      {/* ── Closing Animation Overlay ── */}
+      {closing && (
+        <div className="qa-closing-overlay">
+          <div className="qa-closing-robot">🤖</div>
+          <div className="qa-closing-text">Sampai jumpa!</div>
+          <div className="qa-closing-dots">
+            <span /><span /><span />
+          </div>
+        </div>
+      )}
+
       <div className="section-header ai-panel-header">
         <div>
           <div className="section-eyebrow">AI Tanya Jawab</div>
           <h2 className="section-title">Fora siap membantu</h2>
         </div>
         {onClose && (
-          <button className="ai-panel-close" onClick={onClose} aria-label="Tutup Fora">
+          <button className="ai-panel-close" onClick={handleClose} aria-label="Tutup Fora">
             ✕
           </button>
         )}
