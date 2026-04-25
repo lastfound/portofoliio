@@ -183,10 +183,43 @@ function QnA({ assistantName = 'Fora', onClose }) {
       {/* ── Closing Animation Overlay ── */}
       {closing && (
         <div className="qa-closing-overlay">
-          <div className="qa-closing-robot">🤖</div>
-          <div className="qa-closing-text">Sampai jumpa!</div>
-          <div className="qa-closing-dots">
-            <span /><span /><span />
+          {/* Scan lines */}
+          <div className="qa-closing-scanlines" />
+
+          {/* Grid background */}
+          <div className="qa-closing-grid" />
+
+          {/* Corner brackets */}
+          <div className="qa-closing-bracket qa-closing-bracket--tl" />
+          <div className="qa-closing-bracket qa-closing-bracket--tr" />
+          <div className="qa-closing-bracket qa-closing-bracket--bl" />
+          <div className="qa-closing-bracket qa-closing-bracket--br" />
+
+          {/* Main content */}
+          <div className="qa-closing-content">
+            {/* Robot bouncing */}
+            <div className="qa-closing-robot-wrap">
+              <div className="qa-closing-robot">🤖</div>
+              <div className="qa-closing-robot-shadow" />
+            </div>
+
+            {/* Status text */}
+            <div className="qa-closing-label">SESSION TERMINATED</div>
+
+            {/* Progress bar */}
+            <div className="qa-closing-bar-track">
+              <div className="qa-closing-bar-fill" />
+            </div>
+
+            {/* Glitch text */}
+            <div className="qa-closing-bye" data-text="Sampai Jumpa!">
+              Sampai Jumpa!
+            </div>
+
+            {/* Dots */}
+            <div className="qa-closing-dots">
+              <span /><span /><span />
+            </div>
           </div>
         </div>
       )}
