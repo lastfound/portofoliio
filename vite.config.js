@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   // Ganti ke nama repo GitHub Anda jika berbeda
-  base: '/my-portofolio/',
+  base: './',
   server: {
     proxy: {
       '/api': 'http://localhost:3000',
