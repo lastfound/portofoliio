@@ -102,6 +102,7 @@ function QnA({ assistantName = 'Fora', onClose }) {
   const [closing, setClosing] = useState(false);
   const chatWindowRef = useRef(null);
   const inputAreaRef = useRef(null);
+  const textareaRef = useRef(null);
 
   // Reliable scroll helper
   const doScroll = useCallback(() => {
@@ -141,13 +142,10 @@ function QnA({ assistantName = 'Fora', onClose }) {
     setError('');
     setLoading(true);
 
-    // Blur input on mobile to dismiss keyboard so the chat is visible
-    if (document.activeElement) document.activeElement.blur();
-
     try {
       const [answer] = await Promise.all([
         askBackend(trimmed),
-        new Promise((res) => setTimeout(res, 1400)), // minimum thinking time
+        new Promise((res) => setTimeout(res, 1400)),
       ]);
 
       setMessages((prev) => [
@@ -167,6 +165,8 @@ function QnA({ assistantName = 'Fora', onClose }) {
       ]);
     } finally {
       setLoading(false);
+      // Kembalikan fokus ke textarea agar user bisa langsung ketik lagi
+      textareaRef.current?.focus();
     }
   };
 
@@ -255,6 +255,7 @@ function QnA({ assistantName = 'Fora', onClose }) {
 
       <div className="qa-input-area" ref={inputAreaRef}>
         <textarea
+          ref={textareaRef}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}
