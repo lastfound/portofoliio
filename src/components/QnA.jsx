@@ -120,6 +120,13 @@ function QnA({ assistantName = 'Fora', onClose }) {
     const trimmed = query.trim();
     if (!trimmed) return;
 
+    // Jika user mengetik "tutup", tutup jendela AI
+    if (trimmed.toLowerCase() === 'tutup') {
+      setQuery('');
+      onClose?.();
+      return;
+    }
+
     const userMessage = { id: Date.now(), role: 'user', content: trimmed };
     setMessages((prev) => [...prev, userMessage]);
     setQuery('');
@@ -179,7 +186,7 @@ function QnA({ assistantName = 'Fora', onClose }) {
 
       <div className="qa-body">
         <p className="qa-intro">
-          Tanyakan apa saja tentang portofolio ini, skill, pengalaman, atau proyek yang saya kerjakan.
+          Tanyakan apa saja tentang portofolio ini, skill, pengalaman, atau proyek yang saya kerjakan. Ketik <strong>tutup</strong> lalu kirim untuk menutup jendela ini.
         </p>
 
         <div className="qa-chat-window" ref={chatWindowRef}>
