@@ -114,7 +114,7 @@ function QnA({ assistantName = 'Fora', onClose }) {
     setClosing(true);
     setTimeout(() => {
       onClose?.();
-    }, 2000); // match animation duration
+    }, 1200);
   }, [onClose]);
 
   // Scroll whenever messages or loading state changes
@@ -183,43 +183,10 @@ function QnA({ assistantName = 'Fora', onClose }) {
       {/* ── Closing Animation Overlay ── */}
       {closing && (
         <div className="qa-closing-overlay">
-          {/* Scan lines */}
-          <div className="qa-closing-scanlines" />
-
-          {/* Grid background */}
-          <div className="qa-closing-grid" />
-
-          {/* Corner brackets */}
-          <div className="qa-closing-bracket qa-closing-bracket--tl" />
-          <div className="qa-closing-bracket qa-closing-bracket--tr" />
-          <div className="qa-closing-bracket qa-closing-bracket--bl" />
-          <div className="qa-closing-bracket qa-closing-bracket--br" />
-
-          {/* Main content */}
           <div className="qa-closing-content">
-            {/* Robot bouncing */}
-            <div className="qa-closing-robot-wrap">
-              <div className="qa-closing-robot">🤖</div>
-              <div className="qa-closing-robot-shadow" />
-            </div>
-
-            {/* Status text */}
-            <div className="qa-closing-label">SESSION TERMINATED</div>
-
-            {/* Progress bar */}
-            <div className="qa-closing-bar-track">
-              <div className="qa-closing-bar-fill" />
-            </div>
-
-            {/* Glitch text */}
-            <div className="qa-closing-bye" data-text="Sampai Jumpa!">
-              Sampai Jumpa!
-            </div>
-
-            {/* Dots */}
-            <div className="qa-closing-dots">
-              <span /><span /><span />
-            </div>
+            <div className="qa-closing-name">Fora</div>
+            <div className="qa-closing-line" />
+            <div className="qa-closing-label">See you soon</div>
           </div>
         </div>
       )}
