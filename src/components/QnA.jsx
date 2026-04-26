@@ -159,7 +159,7 @@ function QnA({ assistantName = 'Fora', onClose }) {
         {
           id: Date.now() + 2,
           role: 'bot',
-          content: 'Maaf, jawaban AI tidak tersedia saat ini. Coba lagi nanti atau periksa konfigurasi OpenAI.',
+          content: 'Maaf, jawaban AI tidak tersedia saat ini. Periksa kembali koneksi jaringan internet anda.',
           animate: true,
         },
       ]);
