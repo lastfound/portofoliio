@@ -2,9 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import RippleButton from './RippleButton';
 
 const CHANNELS = [
-  { icon: '✉', label: 'Email',    value: 'your@email.com',              href: 'https://mail.google.com/mail/u/2/#inbox'            },
-  { icon: '⚡', label: 'GitHub',   value: 'github.com/username',          href: 'https://github.com/username'                        },
-  { icon: '⬡', label: 'LinkedIn', value: 'linkedin.com/in/rafi-ibrahim', href: 'https://www.linkedin.com/in/rafi-ibrahim-749492384' },
+  { icon: '✉', label: 'Email',    value: 'rafi.ibra09@gmail.com',              href: 'https://mail.google.com/mail/u/2/#inbox'            },
+  { icon: '⚡', label: 'GitHub',   value: 'github.com/lastfound',          href: 'https://github.com/lastfound'                        },
+  { icon: '⬡', label: 'LinkedIn', value: 'linkedin.com/in/Rafi Ibrahim', href: 'https://www.linkedin.com/in/rafi-ibrahim-749492384' },
 ];
 
 function Kontak() {
@@ -49,7 +49,7 @@ function Kontak() {
       </div>
 
       <div className="contact-layout">
-        {/* ── LEFT ── */}
+        {/* ── kiri ── */}
         <div className="reveal" ref={leftRef}>
           <p className="contact-intro">
             Have an interesting project or want to work together? I'm always open to new ideas and opportunities.
@@ -71,7 +71,7 @@ function Kontak() {
         <form className="contact-form reveal" ref={rightRef} onSubmit={handleSubmit} noValidate>
           {[
             ['name',    'text',  'Full Name',     'Your name'       ],
-            ['email',   'email', 'Email Address', 'email@you.com'   ],
+            ['email',   'email', 'Email Address', 'youremail@gmail.com'   ],
             ['subject', 'text',  'Subject',       'What is this about?' ],
           ].map(([name, type, label, placeholder]) => (
             <div className="form-group" key={name}>

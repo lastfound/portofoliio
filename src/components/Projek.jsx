@@ -18,7 +18,7 @@ const PROJECTS = [
     name: 'Dashboard Analitik',
     desc: 'Dashboard interaktif untuk visualisasi data bisnis secara real-time, dilengkapi grafik dinamis dan laporan otomatis.',
     tags: ['Vue.js', 'Chart.js', 'Laravel', 'MySQL'],
-    link: '#',
+    link: ' https://lastfound.github.io/ExlusifAutomotive/',
   },
   {
     id: '003', emoji: '💬',
