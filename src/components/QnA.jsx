@@ -165,7 +165,6 @@ function QnA({ assistantName = 'Fora', onClose }) {
       ]);
     } finally {
       setLoading(false);
-      // Kembalikan fokus ke textarea agar user bisa langsung ketik lagi
       textareaRef.current?.focus();
     }
   };
