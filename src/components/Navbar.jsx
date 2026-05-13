@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { useLang } from '../context/LanguageContext';
+import translations from '../i18n/translations';
 
 function Navbar() {
+  const { lang, toggle } = useLang();
+  const t = translations.navbar;
+
   const [scrolled, setScrolled]    = useState(false);
   const [activeSection, setActive] = useState('tentang');
   const [menuOpen, setMenuOpen]    = useState(false);
 
   const navLinks = [
-    { id: 'tentang',     label: 'About',    num: '01' },
-    { id: 'projek',      label: 'Work',     num: '02' },
-    { id: 'sertifikat',  label: 'Certs',    num: '03' },
-    { id: 'kontak',      label: 'Contact',  num: '04' },
+    { id: 'tentang',     label: t.links.tentang[lang],     num: '01' },
+    { id: 'projek',      label: t.links.projek[lang],      num: '02' },
+    { id: 'sertifikat',  label: t.links.sertifikat[lang],  num: '03' },
+    { id: 'kontak',      label: t.links.kontak[lang],      num: '04' },
   ];
 
   useEffect(() => {
@@ -24,7 +29,7 @@ function Navbar() {
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [lang]);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
@@ -61,9 +66,21 @@ function Navbar() {
           ))}
         </ul>
 
-        <div className="navbar-status">
-          <div className="status-dot" />
-          Available
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1.2rem' }}>
+          {/* Language Toggle — Pill */}
+          <button
+            onClick={toggle}
+            className="lang-pill"
+            aria-label="Toggle language"
+          >
+            <span className={`lang-pill-option ${lang === 'id' ? 'lang-pill-active' : ''}`}>ID</span>
+            <span className={`lang-pill-option ${lang === 'en' ? 'lang-pill-active' : ''}`}>EN</span>
+          </button>
+
+          <div className="navbar-status">
+            <div className="status-dot" />
+            {t.available[lang]}
+          </div>
         </div>
 
         <button
@@ -135,10 +152,21 @@ function Navbar() {
           ))}
         </ul>
 
+        {/* Language toggle inside mobile menu */}
+        <button
+          onClick={toggle}
+          className="lang-pill"
+          style={{ marginTop: '2rem' }}
+          aria-label="Toggle language"
+        >
+          <span className={`lang-pill-option ${lang === 'id' ? 'lang-pill-active' : ''}`}>ID</span>
+          <span className={`lang-pill-option ${lang === 'en' ? 'lang-pill-active' : ''}`}>EN</span>
+        </button>
+
         <div style={{
           position: 'absolute', bottom: 'clamp(1.5rem, 5vw, 2.5rem)',
           display: 'flex', alignItems: 'center', gap: '0.5rem',
-          fontSize: 'clamp(0.55rem, 2vw, 0.62rem)', 
+          fontSize: 'clamp(0.55rem, 2vw, 0.62rem)',
           fontFamily: "'DM Sans', sans-serif",
           letterSpacing: '0.16em', textTransform: 'uppercase',
           color: '#9e9b94', fontWeight: 400,
@@ -146,7 +174,7 @@ function Navbar() {
           transition: 'opacity 0.3s ease 0.35s',
         }}>
           <div className="status-dot" />
-          Available for collaboration
+          {lang === 'id' ? 'Tersedia untuk kolaborasi' : 'Available for collaboration'}
         </div>
       </div>
     </>

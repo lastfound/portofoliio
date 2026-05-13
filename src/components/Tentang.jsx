@@ -3,28 +3,24 @@ import profilImg from '../assets/profil.jpeg';
 import TypingText from './TypingText';
 import RippleButton from './RippleButton';
 import AvatarHologram from './AvatarHologram';
+import { useLang } from '../context/LanguageContext';
+import translations from '../i18n/translations';
 
 const PROFILE = {
-  label:     'Portfolio — 2025',
   firstName: 'Rafi',
   lastName:  'Ibrahim',
-  roles: ['Full Stack Developer', 'UI / UX Designer', 'React Developer', 'Front-End Engineer'],
-  bio: 'I build beautiful, functional digital experiences — combining modern interfaces with high performance and intuitive UX.',
-  stats: [
-    { num: '3+',   label: 'Projects' },
-    { num: '2+',   label: 'Certs'    },
-    { num: '100%', label: 'Dedicated' },
-  ],
   skills: ['HTML5', 'CSS3', 'JavaScript', 'React', 'Next.js', 'Node.js', 'Git', 'MySQL', 'MongoDB', 'Figma'],
   initials:  'RI',
-  avatarSub: 'Web Developer',
   photo:     profilImg,
 };
 
 function Tentang() {
+  const { lang } = useLang();
+  const t = translations.tentang;
+
   const leftRef   = useRef(null);
   const avatarRef = useRef(null);
-  const [imgError, setImgError]         = useState(false);
+  const [imgError, setImgError]           = useState(false);
   const [avatarVisible, setAvatarVisible] = useState(false);
 
   const isTouch = useRef(
@@ -53,8 +49,8 @@ function Tentang() {
       { threshold: 0, rootMargin: '0px 0px -10px 0px' }
     );
     if (leftRef.current) obs.observe(leftRef.current);
-    const t = setTimeout(() => setAvatarVisible(true), 200);
-    return () => { obs.disconnect(); clearTimeout(t); };
+    const timer = setTimeout(() => setAvatarVisible(true), 200);
+    return () => { obs.disconnect(); clearTimeout(timer); };
   }, []);
 
   const hasPhoto = !!PROFILE.photo && !imgError;
@@ -64,7 +60,7 @@ function Tentang() {
 
       {/* ══ LEFT ══ */}
       <div className="hero-left reveal" ref={leftRef}>
-        <div className="hero-label">{PROFILE.label}</div>
+        <div className="hero-label">{t.label[lang]}</div>
 
         <h1 className="hero-name" data-text="Rafi Ibrahim">
           {PROFILE.firstName}<br />
@@ -73,13 +69,13 @@ function Tentang() {
 
         <p className="hero-role">
           {'// '}
-          <TypingText texts={PROFILE.roles} speed={75} deleteSpeed={35} pause={2200} />
+          <TypingText texts={t.roles[lang]} speed={75} deleteSpeed={35} pause={2200} />
         </p>
 
-        <p className="hero-bio">{PROFILE.bio}</p>
+        <p className="hero-bio">{t.bio[lang]}</p>
 
         <div className="hero-stats">
-          {PROFILE.stats.map(s => (
+          {t.stats[lang].map(s => (
             <div key={s.label}>
               <div className="stat-num count-up">{s.num}</div>
               <div className="stat-label">{s.label}</div>
@@ -95,7 +91,7 @@ function Tentang() {
           onClick={() => document.getElementById('projek')?.scrollIntoView({ behavior: 'smooth' })}
           className="btn"
         >
-          View Work →
+          {t.viewWork[lang]}
         </RippleButton>
       </div>
 
@@ -131,7 +127,7 @@ function Tentang() {
               />
             </AvatarHologram>
 
-            <div className="avatar-sub">{PROFILE.avatarSub}</div>
+            <div className="avatar-sub">{t.avatarSub[lang]}</div>
           </div>
 
           {/* Floating badges */}
@@ -139,7 +135,7 @@ function Tentang() {
             ⚡ <span className="hl">React + Node.js</span>
           </div>
           <div className="floating-badge bottom">
-            Status: <span className="hl">Open to Work</span>
+            Status: <span className="hl">{t.badgeStatus[lang]}</span>
           </div>
         </div>
       </div>

@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import QnA from './QnA';
+import { useLang } from '../context/LanguageContext';
+import translations from '../i18n/translations';
 
 function AIWidget() {
-  const [open, setOpen] = useState(false);
+  const { lang } = useLang();
+  const t = translations.ai;
+
+  const [open, setOpen]       = useState(false);
   const [starting, setStarting] = useState(false);
 
   useEffect(() => {
@@ -14,7 +19,7 @@ function AIWidget() {
 
   return (
     <>
-      <button className="ai-floating-button" onClick={() => setOpen(true)} aria-label="Buka Fora AI">
+      <button className="ai-floating-button" onClick={() => setOpen(true)} aria-label={t.buttonLabel[lang]}>
         <span className="ai-floating-icon">AI</span>
       </button>
 
@@ -25,16 +30,16 @@ function AIWidget() {
               <div className="ai-modal-header">
                 <div>
                   <div className="ai-name">Fora</div>
-                  <div className="ai-subtitle">AI Assistant Portofolio</div>
+                  <div className="ai-subtitle">{t.subtitle[lang]}</div>
                 </div>
-                <button className="ai-close" onClick={() => setOpen(false)} aria-label="Tutup Fora">
+                <button className="ai-close" onClick={() => setOpen(false)} aria-label={t.closeLabel[lang]}>
                   ✕
                 </button>
               </div>
 
               {starting ? (
                 <div className="ai-loading-screen">
-                  <div className="ai-loading-title">Membuka Fora...</div>
+                  <div className="ai-loading-title">{t.opening[lang]}</div>
                   <div className="ai-loading-dots">
                     <span />
                     <span />

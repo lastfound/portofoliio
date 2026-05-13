@@ -1,13 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import RippleButton from './RippleButton';
-
-const CHANNELS = [
-  { icon: '✉', label: 'Email',    value: 'rafi.ibra09@gmail.com',              href: 'https://mail.google.com/mail/u/2/#inbox'            },
-  { icon: '⚡', label: 'GitHub',   value: 'github.com/lastfound',          href: 'https://github.com/lastfound'                        },
-  { icon: '⬡', label: 'LinkedIn', value: 'linkedin.com/in/Rafi Ibrahim', href: 'https://www.linkedin.com/in/rafi-ibrahim-749492384' },
-];
+import { useLang } from '../context/LanguageContext';
+import translations from '../i18n/translations';
 
 function Kontak() {
+  const { lang } = useLang();
+  const t = translations.kontak;
+
   const [form, setForm]   = useState({ name: '', email: '', subject: '', message: '' });
   const [toast, setToast] = useState({ show: false, msg: '' });
   const headerRef = useRef(null);
@@ -36,30 +35,39 @@ function Kontak() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!form.name.trim() || !form.email.trim()) { showToast('Please fill in your name and email.'); return; }
-    showToast('Message sent successfully.');
+    if (!form.name.trim() || !form.email.trim()) {
+      showToast(t.form.errorMsg[lang]);
+      return;
+    }
+    showToast(t.form.successMsg[lang]);
     setForm({ name: '', email: '', subject: '', message: '' });
   };
+
+  const fields = [
+    { name: 'name',    type: 'text',  label: t.form.name[lang],    ph: t.form.namePh[lang]    },
+    { name: 'email',   type: 'email', label: t.form.email[lang],   ph: t.form.emailPh[lang]   },
+    { name: 'subject', type: 'text',  label: t.form.subject[lang], ph: t.form.subjectPh[lang] },
+  ];
 
   return (
     <section id="kontak" className="section">
       <div className="section-header reveal" ref={headerRef}>
-        <div className="section-eyebrow">Get in Touch</div>
-        <h2 className="section-title">Let's <span className="gradient">Collaborate</span></h2>
+        <div className="section-eyebrow">{t.eyebrow[lang]}</div>
+        <h2 className="section-title">
+          {t.title[lang]} <span className="gradient">{t.titleAccent[lang]}</span>
+        </h2>
       </div>
 
       <div className="contact-layout">
         {/* ── kiri ── */}
         <div className="reveal" ref={leftRef}>
-          <p className="contact-intro">
-            Have an interesting project or want to work together? I'm always open to new ideas and opportunities.
-          </p>
+          <p className="contact-intro">{t.intro[lang]}</p>
           <div className="contact-channels">
-            {CHANNELS.map(ch => (
-              <a key={ch.label} href={ch.href} className="contact-channel" target="_blank" rel="noopener noreferrer">
+            {t.channels.map(ch => (
+              <a key={ch.label.en} href={ch.href} className="contact-channel" target="_blank" rel="noopener noreferrer">
                 <span className="contact-channel-icon">{ch.icon}</span>
                 <div>
-                  <span className="contact-channel-label">{ch.label}</span>
+                  <span className="contact-channel-label">{ch.label[lang]}</span>
                   <span className="contact-channel-value">{ch.value}</span>
                 </div>
               </a>
@@ -69,17 +77,13 @@ function Kontak() {
 
         {/* ── RIGHT (Form) ── */}
         <form className="contact-form reveal" ref={rightRef} onSubmit={handleSubmit} noValidate>
-          {[
-            ['name',    'text',  'Full Name',     'Your name'       ],
-            ['email',   'email', 'Email Address', 'youremail@gmail.com'   ],
-            ['subject', 'text',  'Subject',       'What is this about?' ],
-          ].map(([name, type, label, placeholder]) => (
+          {fields.map(({ name, type, label, ph }) => (
             <div className="form-group" key={name}>
               <label className="form-label" htmlFor={name}>{label}</label>
               <input
                 id={name} name={name} type={type}
                 className="form-input"
-                placeholder={placeholder}
+                placeholder={ph}
                 value={form[name]}
                 onChange={handleChange}
               />
@@ -87,18 +91,18 @@ function Kontak() {
           ))}
 
           <div className="form-group">
-            <label className="form-label" htmlFor="message">Message</label>
+            <label className="form-label" htmlFor="message">{t.form.message[lang]}</label>
             <textarea
               id="message" name="message"
               className="form-textarea"
-              placeholder="Tell me more..."
+              placeholder={t.form.messagePh[lang]}
               value={form.message}
               onChange={handleChange}
             />
           </div>
 
           <RippleButton type="submit" className="form-submit">
-            Send Message →
+            {t.form.submit[lang]}
           </RippleButton>
         </form>
       </div>

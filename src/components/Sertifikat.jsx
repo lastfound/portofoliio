@@ -1,29 +1,11 @@
 import React, { useEffect, useRef } from 'react';
-
-const CERTIFICATES = [
-  {
-    id: 'cert-01', icon: '🏆',
-    image: null,
-    issuer: 'Dicoding Indonesia',
-    name: 'Belajar Dasar Pemrograman Web',
-    date: 'Diterbitkan: Januari 2024 • Berlaku Selamanya',
-    desc: 'Menguasai dasar-dasar pengembangan web mencakup HTML5 semantik, CSS3 modern, dan JavaScript ES6+.',
-    verified: true,
-    link: '#',
-  },
-  {
-    id: 'cert-02', icon: '🎓',
-    image: null,
-    issuer: 'Coursera — Meta',
-    name: 'Front-End Developer Professional',
-    date: 'Diterbitkan: Maret 2024 • Berlaku Selamanya',
-    desc: 'Program profesional komprehensif mencakup React.js, UX/UI Design, dan praktik pengembangan web modern.',
-    verified: true,
-    link: '#',
-  },
-];
+import { useLang } from '../context/LanguageContext';
+import translations from '../i18n/translations';
 
 function Sertifikat() {
+  const { lang } = useLang();
+  const t = translations.sertifikat;
+
   const headerRef = useRef(null);
   const gridRef   = useRef(null);
 
@@ -50,12 +32,14 @@ function Sertifikat() {
   return (
     <section id="sertifikat" className="section">
       <div className="section-header reveal" ref={headerRef}>
-        <div className="section-eyebrow">Kredensial Resmi</div>
-        <h2 className="section-title">Sertifikat <span className="accent">Saya</span></h2>
+        <div className="section-eyebrow">{t.eyebrow[lang]}</div>
+        <h2 className="section-title">
+          {t.title[lang]} <span className="accent">{t.titleAccent[lang]}</span>
+        </h2>
       </div>
 
       <div className="cert-grid stagger-parent" ref={gridRef}>
-        {CERTIFICATES.map((cert) => (
+        {t.items.map((cert) => (
           <div className="cert-card stagger-child" key={cert.id}>
 
             {/* Thumbnail */}
@@ -72,7 +56,7 @@ function Sertifikat() {
               {cert.image ? (
                 <img
                   src={cert.image}
-                  alt={`Sertifikat ${cert.name}`}
+                  alt={`Sertifikat ${cert.name[lang]}`}
                   style={{
                     position: 'absolute',
                     inset: 0,
@@ -109,17 +93,17 @@ function Sertifikat() {
             <div className="cert-header">
               <div>
                 <div className="cert-issuer">{cert.issuer}</div>
-                <h3 className="cert-name">{cert.name}</h3>
+                <h3 className="cert-name">{cert.name[lang]}</h3>
               </div>
             </div>
             <div className="cert-body">
-              <div className="cert-date">📅 {cert.date}</div>
-              <p className="cert-desc">{cert.desc}</p>
+              <div className="cert-date">📅 {cert.date[lang]}</div>
+              <p className="cert-desc">{cert.desc[lang]}</p>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '0.8rem' }}>
-                {cert.verified && <span className="cert-badge">✓ Terverifikasi</span>}
+                {cert.verified && <span className="cert-badge">{t.verified[lang]}</span>}
                 {cert.link && cert.link !== '#' && (
                   <a href={cert.link} target="_blank" rel="noopener noreferrer" className="project-link" style={{ fontSize: '0.68rem' }}>
-                    Lihat Sertifikat →
+                    {t.viewCert[lang]}
                   </a>
                 )}
               </div>

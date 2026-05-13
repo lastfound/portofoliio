@@ -2,35 +2,15 @@ import React, { useEffect, useRef } from 'react';
 import imgBoanana   from '../assets/boanana.png';
 import imgDashboard from '../assets/dashboard.png';
 import imgTictactoe from '../assets/tictactoe.png';
+import { useLang } from '../context/LanguageContext';
+import translations from '../i18n/translations';
 
-const PROJECTS = [
-  {
-    id: '001', emoji: '🛍️',
-    image: imgBoanana,
-    name: 'Website Boanana',
-    desc: 'Platform produk kripik pisang milik umkm bernama Boanana yang dibuat menggunakan react vite dengan tampilan yang menarik dan lucu.',
-    tags: ['React', 'Node.js', 'Vite', 'Figma'],
-    link: 'https://lastfound.github.io/boanana/',
-  },
-  {
-    id: '002', emoji: '📊',
-    image: imgDashboard,
-    name: 'Dashboard Analitik',
-    desc: 'Dashboard interaktif untuk visualisasi data bisnis secara real-time, dilengkapi grafik dinamis dan laporan otomatis.',
-    tags: ['Vue.js', 'Chart.js', 'Laravel', 'MySQL'],
-    link: ' https://lastfound.github.io/ExlusifAutomotive/',
-  },
-  {
-    id: '003', emoji: '💬',
-    image: imgTictactoe,
-    name: 'Aplikasi Chat Real-Time',
-    desc: 'Aplikasi pesan instan berbasis WebSocket dengan fitur room chat, notifikasi push, dan pengiriman file multimedia.',
-    tags: ['Socket.io', 'Express', 'PostgreSQL', 'Redis'],
-    link: '#',
-  },
-];
+const IMAGES = [imgBoanana, imgDashboard, imgTictactoe];
 
 function Projek() {
+  const { lang } = useLang();
+  const t = translations.projek;
+
   const headerRef = useRef(null);
   const gridRef   = useRef(null);
 
@@ -57,12 +37,17 @@ function Projek() {
   return (
     <section id="projek" className="section">
       <div className="section-header reveal" ref={headerRef}>
-        <div className="section-eyebrow">Karya Terbaik</div>
-        <h2 className="section-title">Proyek <span className="accent">Web</span> Saya</h2>
+        <div className="section-eyebrow">{t.eyebrow[lang]}</div>
+        <h2 className="section-title">
+          {lang === 'id'
+            ? <>Proyek <span className="accent">Web</span> Saya</>
+            : <>My <span className="accent">Web</span> Projects</>
+          }
+        </h2>
       </div>
 
       <div className="projects-grid stagger-parent" ref={gridRef}>
-        {PROJECTS.map((project) => (
+        {t.items.map((project, idx) => (
           <div className="project-card stagger-child" key={project.id}>
 
             {/* ── Preview Gambar / Thumbnail ── */}
@@ -72,10 +57,10 @@ function Projek() {
             >
               <div className="project-thumb-depth" />
 
-              {project.image ? (
+              {IMAGES[idx] ? (
                 <img
-                  src={project.image}
-                  alt={`Preview ${project.name}`}
+                  src={IMAGES[idx]}
+                  alt={`Preview ${project.name[lang]}`}
                   style={{
                     position: 'absolute',
                     inset: 0,
@@ -94,7 +79,7 @@ function Projek() {
               ) : null}
               <span
                 style={{
-                  display: project.image ? 'none' : 'flex',
+                  display: IMAGES[idx] ? 'none' : 'flex',
                   width: '100%',
                   height: '100%',
                   alignItems: 'center',
@@ -109,13 +94,13 @@ function Projek() {
             {/* ── Konten ── */}
             <div className="project-body">
               <div className="project-num">{project.id} / PROJECT</div>
-              <h3 className="project-name">{project.name}</h3>
-              <p className="project-desc">{project.desc}</p>
+              <h3 className="project-name">{project.name[lang]}</h3>
+              <p className="project-desc">{project.desc[lang]}</p>
               <div className="project-tags">
                 {project.tags.map(tag => <span key={tag} className="project-tag">{tag}</span>)}
               </div>
               <a href={project.link} className="project-link" target="_blank" rel="noopener noreferrer">
-                Lihat Proyek →
+                {t.viewProject[lang]}
               </a>
             </div>
           </div>
