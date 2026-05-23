@@ -10,7 +10,6 @@ const IMAGES = [imgBoanana, imgDashboard, imgTictactoe];
 function Projek() {
   const { lang } = useLang();
   const t = translations.projek;
-
   const headerRef = useRef(null);
   const gridRef   = useRef(null);
 

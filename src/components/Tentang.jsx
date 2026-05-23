@@ -9,7 +9,7 @@ import translations from '../i18n/translations';
 const PROFILE = {
   firstName: 'Rafi',
   lastName:  'Ibrahim',
-  skills: ['HTML5', 'CSS3', 'JavaScript', 'React', 'Next.js', 'Node.js', 'Git', 'MySQL', 'MongoDB', 'Figma'],
+  skills: ['HTML5', 'CSS3', 'JavaScript', 'React', 'Next.js', 'Node.js', 'Git', 'MySQL', 'MongoDB', 'Figma', 'Wordpress'],
   initials:  'RI',
   photo:     profilImg,
 };
