@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useLang } from '../context/LanguageContext';
 import translations from '../i18n/translations';
 
-const AI_BACKEND_URL = "https://backendapirafi.vercel.app/api/ai";
+const AI_BACKEND_URL = import.meta.env.VITE_AI_BACKEND_URL || "/api/ai";
 
 const LOCAL_FALLBACK = (question, lang) => {
   const text = question.toLowerCase();
