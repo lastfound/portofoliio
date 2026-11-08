@@ -1,6 +1,6 @@
 import React from 'react';
-import { useLang } from '../context/LanguageContext';
-import translations from '../i18n/translations';
+import { useLang } from '../../context/LanguageContext';
+import translations from '../../i18n/translations';
 
 function Footer() {
   const { lang } = useLang();

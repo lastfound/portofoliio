@@ -1,26 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { useLang } from '../context/LanguageContext';
-import translations from '../i18n/translations';
+import { useLang } from '../../context/LanguageContext';
+import translations from '../../i18n/translations';
 
 function Navbar() {
   const { lang, toggle } = useLang();
   const t = translations.navbar;
 
   const [scrolled, setScrolled]    = useState(false);
-  const [activeSection, setActive] = useState('tentang');
+  const [activeSection, setActive] = useState('intro');
   const [menuOpen, setMenuOpen]    = useState(false);
 
   const navLinks = [
-    { id: 'tentang',     label: t.links.tentang[lang],     num: '01' },
-    { id: 'projek',      label: t.links.projek[lang],      num: '02' },
-    { id: 'sertifikat',  label: t.links.sertifikat[lang],  num: '03' },
-    { id: 'kontak',      label: t.links.kontak[lang],      num: '04' },
+    { id: 'intro',       label: t.links.intro[lang],       num: '01' },
+    { id: 'tentang',     label: t.links.tentang[lang],     num: '02' },
+    { id: 'projek',      label: t.links.projek[lang],      num: '03' },
+    { id: 'sertifikat',  label: t.links.sertifikat[lang],  num: '04' },
+    { id: 'kontak',      label: t.links.kontak[lang],      num: '05' },
   ];
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-      let current = 'tentang';
+      setScrolled(window.scrollY > 40);
+      let current = 'intro';
       navLinks.forEach(({ id }) => {
         const sec = document.getElementById(id);
         if (sec && window.scrollY >= sec.offsetTop - 200) current = id;
@@ -45,9 +46,9 @@ function Navbar() {
     <>
       <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
         <a
-          href="#tentang"
+          href="#intro"
           className="navbar-logo"
-          onClick={(e) => { e.preventDefault(); scrollTo('tentang'); }}
+          onClick={(e) => { e.preventDefault(); scrollTo('intro'); }}
         >
           Rafi<span> Ibrahim</span>
         </a>
@@ -67,7 +68,7 @@ function Navbar() {
         </ul>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '1.2rem' }}>
-          {/* Language Toggle — Pill */}
+          {/* Language Toggle — Minimal Box */}
           <button
             onClick={toggle}
             className="lang-pill"
@@ -98,12 +99,12 @@ function Navbar() {
           position: 'fixed', inset: 0, zIndex: 997,
           display: 'flex', flexDirection: 'column',
           alignItems: 'center', justifyContent: 'center',
-          background: '#f9f8f6',
+          background: '#000000',
           opacity: menuOpen ? 1 : 0,
           pointerEvents: menuOpen ? 'all' : 'none',
           transition: 'opacity 0.3s ease',
           overflow: 'auto',
-          padding: '1rem',
+          padding: '1.5rem',
         }}
         onClick={(e) => { if (e.target === e.currentTarget) setMenuOpen(false); }}
       >
@@ -111,39 +112,36 @@ function Navbar() {
           onClick={() => setMenuOpen(false)}
           aria-label="Close menu"
           style={{
-            position: 'absolute', top: '0.8rem', right: '0.8rem',
+            position: 'absolute', top: '1.2rem', right: '1.2rem',
             background: 'none', border: 'none',
-            color: '#1a1a1a', fontSize: '1rem',
-            cursor: 'pointer', padding: '0.3rem', zIndex: 999,
-            fontFamily: "'DM Sans', sans-serif", fontWeight: 300,
+            color: '#ffffff', fontSize: '1.2rem',
+            cursor: 'pointer', padding: '0.5rem', zIndex: 999,
           }}
         >✕</button>
 
         <ul style={{
           listStyle: 'none', padding: 0, margin: 0,
           display: 'flex', flexDirection: 'column',
-          gap: 'clamp(1.5rem, 4vw, 2.5rem)', textAlign: 'center',
-          marginTop: '2rem',
+          gap: '2rem', textAlign: 'center',
           width: '100%',
         }}>
           {navLinks.map((link, i) => (
             <li key={link.id} style={{
               opacity: menuOpen ? 1 : 0,
               transform: menuOpen ? 'translateY(0)' : 'translateY(16px)',
-              transition: `opacity 0.3s ease ${i * 0.06 + 0.05}s, transform 0.3s ease ${i * 0.06 + 0.05}s`,
+              transition: `opacity 0.3s ease ${i * 0.05 + 0.05}s, transform 0.3s ease ${i * 0.05 + 0.05}s`,
             }}>
               <a
                 href={`#${link.id}`}
                 onClick={(e) => { e.preventDefault(); scrollTo(link.id); }}
                 style={{
                   fontFamily: "'DM Serif Display', Georgia, serif",
-                  fontSize: 'clamp(1.4rem, 5vw, 2rem)',
+                  fontSize: 'clamp(1.6rem, 6vw, 2.4rem)',
                   fontWeight: 400,
-                  color: activeSection === link.id ? '#6b5b4e' : '#1a1a1a',
+                  color: activeSection === link.id ? '#ffffff' : '#777785',
                   textDecoration: 'none',
-                  letterSpacing: '-0.01em',
                   display: 'block',
-                  padding: '0.5rem 0',
+                  padding: '0.4rem 0',
                 }}
               >
                 {link.label}
@@ -156,7 +154,7 @@ function Navbar() {
         <button
           onClick={toggle}
           className="lang-pill"
-          style={{ marginTop: '2rem' }}
+          style={{ marginTop: '2.5rem' }}
           aria-label="Toggle language"
         >
           <span className={`lang-pill-option ${lang === 'id' ? 'lang-pill-active' : ''}`}>ID</span>
@@ -164,14 +162,14 @@ function Navbar() {
         </button>
 
         <div style={{
-          position: 'absolute', bottom: 'clamp(1.5rem, 5vw, 2.5rem)',
-          display: 'flex', alignItems: 'center', gap: '0.5rem',
-          fontSize: 'clamp(0.55rem, 2vw, 0.62rem)',
+          position: 'absolute', bottom: '2rem',
+          display: 'flex', alignItems: 'center', gap: '0.6rem',
+          fontSize: '0.65rem',
           fontFamily: "'DM Sans', sans-serif",
-          letterSpacing: '0.16em', textTransform: 'uppercase',
-          color: '#9e9b94', fontWeight: 400,
+          letterSpacing: '0.14em', textTransform: 'uppercase',
+          color: '#555562', fontWeight: 400,
           opacity: menuOpen ? 1 : 0,
-          transition: 'opacity 0.3s ease 0.35s',
+          transition: 'opacity 0.3s ease 0.3s',
         }}>
           <div className="status-dot" />
           {lang === 'id' ? 'Tersedia untuk kolaborasi' : 'Available for collaboration'}

@@ -1,7 +1,21 @@
 import React, { useState, useRef, useEffect } from 'react';
-import RippleButton from './RippleButton';
-import { useLang } from '../context/LanguageContext';
-import translations from '../i18n/translations';
+import { Mail, Github, Linkedin } from 'lucide-react';
+import RippleButton from '../ui/RippleButton';
+import { useLang } from '../../context/LanguageContext';
+import translations from '../../i18n/translations';
+
+function getChannelIcon(key) {
+  switch (key) {
+    case 'Email':
+      return <Mail size={18} />;
+    case 'GitHub':
+      return <Github size={18} />;
+    case 'LinkedIn':
+      return <Linkedin size={18} />;
+    default:
+      return <Mail size={18} />;
+  }
+}
 
 function Kontak() {
   const { lang } = useLang();
@@ -59,13 +73,15 @@ function Kontak() {
       </div>
 
       <div className="contact-layout">
-        {/* ── kiri ── */}
+        {/* ── Kiri ── */}
         <div className="reveal" ref={leftRef}>
           <p className="contact-intro">{t.intro[lang]}</p>
           <div className="contact-channels">
             {t.channels.map(ch => (
               <a key={ch.label.en} href={ch.href} className="contact-channel" target="_blank" rel="noopener noreferrer">
-                <span className="contact-channel-icon">{ch.icon}</span>
+                <span className="contact-channel-icon">
+                  {getChannelIcon(ch.label.en)}
+                </span>
                 <div>
                   <span className="contact-channel-label">{ch.label[lang]}</span>
                   <span className="contact-channel-value">{ch.value}</span>
@@ -75,7 +91,7 @@ function Kontak() {
           </div>
         </div>
 
-        {/* ── RIGHT (Form) ── */}
+        {/* ── Kanan (Form) ── */}
         <form className="contact-form reveal" ref={rightRef} onSubmit={handleSubmit} noValidate>
           {fields.map(({ name, type, label, ph }) => (
             <div className="form-group" key={name}>

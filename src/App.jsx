@@ -1,17 +1,20 @@
 import React, { useState, useCallback } from 'react';
 import './styles/global.css';
 
-import LoadingScreen    from './components/LoadingScreen';
-import Cursor           from './components/Cursor';
-import Navbar           from './components/Navbar';
-import Tentang          from './components/Tentang';
-import Projek           from './components/Projek';
-import Sertifikat       from './components/Sertifikat';
-import Kontak           from './components/Kontak';
-import Footer           from './components/Footer';
-import ScrollAnimator   from './components/ScrollAnimator';
-import Particles        from './components/Particles';
-import AIWidget         from './components/AIWidget';
+import LoadingScreen    from './components/layout/LoadingScreen';
+import Cursor           from './components/layout/Cursor';
+import Navbar           from './components/layout/Navbar';
+import Footer           from './components/layout/Footer';
+
+import Intro            from './components/sections/Intro';
+import About            from './components/sections/About';
+import Projek           from './components/sections/Projek';
+import Sertifikat       from './components/sections/Sertifikat';
+import Kontak           from './components/sections/Kontak';
+
+import ScrollAnimator   from './components/ui/ScrollAnimator';
+import Particles        from './components/ui/Particles';
+import AIWidget         from './components/ai/AIWidget';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -32,7 +35,8 @@ function App() {
         <Cursor />
         <Navbar />
         <main>
-          <Tentang />
+          <Intro />
+          <About />
           <Projek />
           <Sertifikat />
           <Kontak />

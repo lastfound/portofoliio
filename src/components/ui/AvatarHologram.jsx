@@ -48,7 +48,7 @@ function AvatarHologram({ children, photo, initials, avatarSub, hasPhoto }) {
           fontFamily: "'DM Serif Display', Georgia, serif",
           fontSize: '5rem',
           fontWeight: 400,
-          color: '#6b5b4e',
+          color: '#ffffff',
         }}>
           {initials}
         </div>
@@ -58,7 +58,7 @@ function AvatarHologram({ children, photo, initials, avatarSub, hasPhoto }) {
       {!revealed && (
         <div style={{
           position: 'absolute', inset: 0, zIndex: 4,
-          background: '#f5f4f0',
+          background: '#000000',
           pointerEvents: 'none',
         }} />
       )}

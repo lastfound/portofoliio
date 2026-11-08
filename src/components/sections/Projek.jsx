@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import imgBoanana   from '../assets/boanana.png';
-import imgDashboard from '../assets/dashboard.png';
-import imgTictactoe from '../assets/tictactoe.png';
-import { useLang } from '../context/LanguageContext';
-import translations from '../i18n/translations';
+import imgBoanana   from '../../assets/boanana.png';
+import imgDashboard from '../../assets/dashboard.png';
+import imgTictactoe from '../../assets/tictactoe.png';
+import { useLang } from '../../context/LanguageContext';
+import translations from '../../i18n/translations';
 
 const IMAGES = [imgBoanana, imgDashboard, imgTictactoe];
 
@@ -23,7 +23,7 @@ function Projek() {
       if (e.isIntersecting) {
         const cards = gridRef.current?.querySelectorAll('.stagger-child');
         cards?.forEach((card, i) => {
-          setTimeout(() => card.classList.add('visible'), i * 150);
+          setTimeout(() => card.classList.add('visible'), i * 120);
         });
         obs2.disconnect();
       }
@@ -83,10 +83,12 @@ function Projek() {
                   height: '100%',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '3rem',
+                  fontSize: '1rem',
+                  fontFamily: 'monospace',
+                  color: '#666675',
                 }}
               >
-                {project.emoji}
+                [{project.id}]
               </span>
             </div>
 

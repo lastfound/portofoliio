@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useLang } from '../context/LanguageContext';
-import translations from '../i18n/translations';
+import { useLang } from '../../context/LanguageContext';
+import translations from '../../i18n/translations';
 
 const AI_BACKEND_URL = import.meta.env.VITE_AI_BACKEND_URL || "/api/ai";
 

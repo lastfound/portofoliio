@@ -10,20 +10,20 @@ function LoadingScreen({ onComplete }) {
   useEffect(() => {
     let current = 0;
     const interval = setInterval(() => {
-      const step = current < 40  ? 2.8
-                 : current < 70  ? 1.8
-                 : current < 90  ? 1.0
-                 : current < 97  ? 0.5 : 1.5;
+      const step = current < 40  ? 3.2
+                 : current < 70  ? 2.2
+                 : current < 90  ? 1.4
+                 : current < 97  ? 0.8 : 2.0;
       current = Math.min(current + step, 100);
       setProgress(Math.floor(current));
       if (current >= 100) {
         clearInterval(interval);
         setTimeout(() => {
           setFadeOut(true);
-          setTimeout(() => onCompleteRef.current?.(), 650);
-        }, 400);
+          setTimeout(() => onCompleteRef.current?.(), 600);
+        }, 300);
       }
-    }, 28);
+    }, 25);
 
     return () => clearInterval(interval);
   }, []);
@@ -31,49 +31,50 @@ function LoadingScreen({ onComplete }) {
   return (
     <div style={{
       position: 'fixed', inset: 0, zIndex: 10000,
-      background: '#f9f8f6',
+      background: '#000000',
       display: 'flex', flexDirection: 'column',
       alignItems: 'center', justifyContent: 'center',
       opacity: fadeOut ? 0 : 1,
-      transition: fadeOut ? 'opacity 0.65s ease' : 'none',
+      transition: fadeOut ? 'opacity 0.6s ease' : 'none',
       pointerEvents: fadeOut ? 'none' : 'all',
     }}>
 
       {/* Name */}
       <div style={{
         fontFamily: "'DM Serif Display', Georgia, serif",
-        fontSize: 'clamp(1.8rem, 6vw, 2.8rem)',
+        fontSize: 'clamp(2rem, 6vw, 3rem)',
         fontWeight: 400,
         letterSpacing: '-0.02em',
-        color: '#1a1a1a',
-        marginBottom: '3rem',
+        color: '#ffffff',
+        marginBottom: '2.5rem',
         lineHeight: 1,
       }}>
         Rafi Ibrahim
       </div>
 
       {/* Progress container */}
-      <div style={{ width: 'min(320px, 70vw)' }}>
+      <div style={{ width: 'min(300px, 70vw)' }}>
         <div style={{
           width: '100%', height: '1px',
-          background: '#e2e0db',
+          background: 'rgba(255, 255, 255, 0.1)',
           position: 'relative', marginBottom: '1rem',
         }}>
           <div style={{
             height: '100%',
             width: `${progress}%`,
-            background: '#1a1a1a',
+            background: '#ffffff',
             transition: 'width 0.04s linear',
+            boxShadow: '0 0 8px rgba(255, 255, 255, 0.4)',
           }} />
         </div>
 
         <div style={{
           display: 'flex', justifyContent: 'space-between',
           fontFamily: "'DM Sans', sans-serif",
-          fontSize: '0.58rem',
-          letterSpacing: '0.16em',
+          fontSize: '0.62rem',
+          letterSpacing: '0.14em',
           textTransform: 'uppercase',
-          color: '#9e9b94',
+          color: '#666670',
           fontWeight: 400,
         }}>
           <span>
@@ -83,7 +84,7 @@ function LoadingScreen({ onComplete }) {
              : progress < 100 ? 'Almost ready'
              : 'Welcome'}
           </span>
-          <span>{progress}%</span>
+          <span style={{ color: '#ffffff', fontFamily: 'monospace' }}>{progress}%</span>
         </div>
       </div>
     </div>

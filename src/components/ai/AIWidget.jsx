@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import QnA from './QnA';
-import { useLang } from '../context/LanguageContext';
-import translations from '../i18n/translations';
+import { useLang } from '../../context/LanguageContext';
+import translations from '../../i18n/translations';
 
 function AIWidget() {
   const { lang } = useLang();

@@ -1,0 +1,201 @@
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import profilImg from '../../assets/profil.jpeg';
+import TypingText from '../ui/TypingText';
+import RippleButton from '../ui/RippleButton';
+import AvatarHologram from '../ui/AvatarHologram';
+import { useLang } from '../../context/LanguageContext';
+import translations from '../../i18n/translations';
+
+const PROFILE = {
+  firstName: 'Rafi',
+  lastName:  'Ibrahim',
+  skills: ['Python', 'PyTorch', 'TensorFlow', 'LLM Architectures', 'React', 'Node.js', 'FastAPI', 'Docker', 'Git'],
+  initials:  'RI',
+  photo:     profilImg,
+};
+
+function Intro() {
+  const { lang } = useLang();
+  const t = translations.intro;
+
+  const leftRef   = useRef(null);
+  const avatarRef = useRef(null);
+  const [imgError, setImgError]           = useState(false);
+  const [avatarVisible, setAvatarVisible] = useState(false);
+
+  const isTouch = useRef(
+    typeof window !== 'undefined'
+      ? window.matchMedia('(hover: none) and (pointer: coarse)').matches
+      : false
+  ).current;
+
+  const handleMouseMove = useCallback((e) => {
+    if (isTouch) return;
+    const el = avatarRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const dx = (e.clientX - (rect.left + rect.width  / 2)) / (rect.width  / 2);
+    const dy = (e.clientY - (rect.top  + rect.height / 2)) / (rect.height / 2);
+    el.style.transform = `perspective(1000px) rotateX(${dy * -5}deg) rotateY(${dx * 5}deg) scale3d(1.01,1.01,1.01)`;
+  }, [isTouch]);
+
+  const handleMouseLeave = useCallback(() => {
+    if (avatarRef.current) avatarRef.current.style.transform = '';
+  }, []);
+
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) leftRef.current?.classList.add('visible'); },
+      { threshold: 0, rootMargin: '0px 0px -10px 0px' }
+    );
+    if (leftRef.current) obs.observe(leftRef.current);
+    const timer = setTimeout(() => setAvatarVisible(true), 150);
+    return () => { obs.disconnect(); clearTimeout(timer); };
+  }, []);
+
+  const hasPhoto = !!PROFILE.photo && !imgError;
+
+  return (
+    <section id="intro" className="section tentang">
+
+      {/* ══ LEFT (Hero Content) ══ */}
+      <div className="hero-left reveal" ref={leftRef}>
+        <div className="hero-label">{t.label[lang]}</div>
+
+        <h1 className="hero-name" data-text="Rafi Ibrahim">
+          {PROFILE.firstName}<br />
+          <span className="gradient">{PROFILE.lastName}</span>
+        </h1>
+
+        <p className="hero-role">
+          {'// '}
+          <TypingText texts={t.roles[lang]} speed={70} deleteSpeed={35} pause={2200} />
+        </p>
+
+        <p className="hero-bio">{t.bio[lang]}</p>
+
+        <div className="hero-stats">
+          {t.stats[lang].map(s => (
+            <div key={s.label}>
+              <div className="stat-num count-up">{s.num}</div>
+              <div className="stat-label">{s.label}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="hero-skills">
+          {PROFILE.skills.map(sk => <span key={sk} className="skill-tag">{sk}</span>)}
+        </div>
+
+        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
+          <RippleButton
+            onClick={() => document.getElementById('tentang')?.scrollIntoView({ behavior: 'smooth' })}
+            className="btn"
+          >
+            {t.exploreAbout[lang]}
+          </RippleButton>
+
+          <button
+            type="button"
+            onClick={() => document.getElementById('projek')?.scrollIntoView({ behavior: 'smooth' })}
+            className="btn btn-outline"
+          >
+            {t.viewWork[lang]}
+          </button>
+        </div>
+      </div>
+
+      {/* ══ RIGHT — Avatar Frame with Crossed Tapes ══ */}
+      <div
+        className="hero-visual"
+        style={{
+          display: 'flex', justifyContent: 'center', alignItems: 'center',
+          opacity: avatarVisible ? 1 : 0,
+          transform: avatarVisible ? 'none' : 'translateY(16px)',
+          transition: 'opacity 0.7s ease, transform 0.7s ease',
+        }}
+      >
+        <div className="avatar-wrapper">
+          <div
+            ref={avatarRef}
+            className="avatar-frame"
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            style={{ transformStyle: 'preserve-3d', transition: 'transform 0.15s ease-out', overflow: 'hidden' }}
+          >
+            <AvatarHologram hasPhoto={hasPhoto} initials={PROFILE.initials}>
+              <img
+                src={PROFILE.photo}
+                alt={`${PROFILE.firstName} ${PROFILE.lastName}`}
+                className="avatar-photo-img"
+                style={{
+                  position: 'absolute', top: 0, left: 0,
+                  width: '100%', height: '150%',
+                  objectFit: 'cover', objectPosition: 'center top',
+                }}
+                onError={() => setImgError(true)}
+              />
+              <div className="avatar-stealth-overlay" />
+            </AvatarHologram>
+
+            {/* ══ CROSSED RUNNING TAPES (READY / WORK) ══ */}
+            <div className="avatar-tapes-wrapper" aria-hidden="true">
+              {/* Tali Kiri — READY */}
+              <div className="anime-tape tape-ready">
+                <div className="tape-border-top" />
+                <div className="tape-track tape-track-left">
+                  <div className="tape-text">
+                    <span>READY</span><span className="tape-dot">✦</span>
+                    <span>READY</span><span className="tape-dot">✦</span>
+                    <span>READY</span><span className="tape-dot">✦</span>
+                    <span>READY</span><span className="tape-dot">✦</span>
+                    <span>READY</span><span className="tape-dot">✦</span>
+                    <span>READY</span><span className="tape-dot">✦</span>
+                  </div>
+                  <div className="tape-text">
+                    <span>READY</span><span className="tape-dot">✦</span>
+                    <span>READY</span><span className="tape-dot">✦</span>
+                    <span>READY</span><span className="tape-dot">✦</span>
+                    <span>READY</span><span className="tape-dot">✦</span>
+                    <span>READY</span><span className="tape-dot">✦</span>
+                    <span>READY</span><span className="tape-dot">✦</span>
+                  </div>
+                </div>
+                <div className="tape-border-bottom" />
+              </div>
+
+              {/* Tali Kanan — WORK */}
+              <div className="anime-tape tape-work">
+                <div className="tape-border-top" />
+                <div className="tape-track tape-track-right">
+                  <div className="tape-text">
+                    <span>WORK</span><span className="tape-dot">✦</span>
+                    <span>WORK</span><span className="tape-dot">✦</span>
+                    <span>WORK</span><span className="tape-dot">✦</span>
+                    <span>WORK</span><span className="tape-dot">✦</span>
+                    <span>WORK</span><span className="tape-dot">✦</span>
+                    <span>WORK</span><span className="tape-dot">✦</span>
+                  </div>
+                  <div className="tape-text">
+                    <span>WORK</span><span className="tape-dot">✦</span>
+                    <span>WORK</span><span className="tape-dot">✦</span>
+                    <span>WORK</span><span className="tape-dot">✦</span>
+                    <span>WORK</span><span className="tape-dot">✦</span>
+                    <span>WORK</span><span className="tape-dot">✦</span>
+                    <span>WORK</span><span className="tape-dot">✦</span>
+                  </div>
+                </div>
+                <div className="tape-border-bottom" />
+              </div>
+            </div>
+
+            <div className="avatar-sub">{t.avatarSub[lang]}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default Intro;
+
