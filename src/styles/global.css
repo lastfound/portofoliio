@@ -152,11 +152,17 @@ h1, h2, h3, h4 {
 }
 
 .gradient {
-  background: linear-gradient(135deg, #ffffff 40%, #828290 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #ffffff;
   display: inline-block;
+}
+
+@supports (-webkit-background-clip: text) and (-webkit-text-fill-color: transparent) {
+  .gradient {
+    background: linear-gradient(135deg, #ffffff 30%, #e4e4e7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 }
 
 .accent {
@@ -2186,6 +2192,17 @@ h1, h2, h3, h4 {
 }
 
 @media (max-width: 1024px) {
+  /* Fix: Pastikan kata kedua pada judul selalu putih solid di HP & Tablet */
+  .gradient,
+  .accent {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+    display: inline !important;
+  }
+
   .projects-grid,
   .cert-grid {
     grid-template-columns: repeat(2, 1fr);
