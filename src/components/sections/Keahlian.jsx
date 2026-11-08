@@ -25,8 +25,8 @@ function Keahlian() {
         });
       },
       {
-        threshold: 0.18,
-        rootMargin: '-20px 0px -40px 0px',
+        threshold: 0.1,
+        rootMargin: '0px 0px -25px 0px',
       }
     );
 

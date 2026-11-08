@@ -24,8 +24,8 @@ const translations = {
   intro: {
     label:     { id: 'Portofolio — 2025',  en: 'Portfolio — 2025'  },
     roles: {
-      id: ['AI Architecture Enthusiast', 'Full Stack Developer', 'React Developer', 'Software Engineer'],
-      en: ['AI Architecture Enthusiast', 'Full Stack Developer', 'React Developer', 'Software Engineer'],
+      id: ['AI Architecture Enthusiast', 'Full Stack Developer', 'App Developer', 'Software Engineer'],
+      en: ['AI Architecture Enthusiast', 'Full Stack Developer', 'App Developer', 'Software Engineer'],
     },
     bio: {
       id: 'Saya membangun pengalaman digital yang presisi dan berkinerja tinggi — menggabungkan arsitektur modern dengan interaksi yang mulus dan performa optimal.',
@@ -57,31 +57,31 @@ const translations = {
     title:        { id: 'Eksplorasi &',               en: 'Exploration &' },
     titleAccent:  { id: 'Perjalanan',                 en: 'Journey' },
 
-    // Bab 1: Minat & Visi Karir AI Architecture
+    // Bab 1: Minat & Visi Karir AI Architecture & Riset
     chapter1: {
       tag: '// 01. ASPIRASI & ARSITEKTUR AI',
-      role: { id: 'AI Engineer — Architecture AI', en: 'AI Engineer — AI Architecture' },
+      role: { id: 'Web & AI Developer — Riset & Machine Learning', en: 'Web & AI Developer — Machine Learning & Research' },
       title: {
-        id: 'Merancang Sistem Cerdas dari Fondasi Arsitektur',
-        en: 'Architecting Intelligent Systems from the Ground Up'
+        id: 'Pengembangan Web, Machine Learning, dan Riset AI Masa Depan',
+        en: 'Web Engineering, Machine Learning, and Future AI Research'
       },
       lead: {
-        id: 'Bagi saya, esensi teknologi cerdas tidak hanya terletak pada menjalankan model AI yang sudah jadi, melainkan pada bagaimana sistem tersebut diarsiteki: scalable, efisien, dan terintegrasi secara andal.',
-        en: 'To me, the true essence of intelligent technology does not lie solely in running off-the-shelf models, but in how the entire system is architected: scalable, efficient, and reliably integrated.'
+        id: 'Halo! Saya adalah siswa kelas 12 SMK yang berfokus pada pengembangan web dan kecerdasan buatan. Saat ini saya sedang aktif mempelajari dasar-dasar Machine Learning dan bercita-cita untuk berkontribusi dalam riset AI di masa depan.',
+        en: 'Hello! I am a 12th-grade vocational high school student dedicated to modern web development and artificial intelligence. Currently, I am actively exploring the fundamentals of Machine Learning with an ambition to contribute to future AI research.'
       },
       paragraphs: [
         {
-          id: 'Fokus dan minat terbesar saya berpusat pada bidang Artificial Intelligence, khususnya sebagai AI Engineer dengan spesialisasi Architecture AI. Saya mendedikasikan waktu untuk mendalami bagaimana merancang arsitektur sistem cerdas, membangun alur orkestrasi pipeline Large Language Model (LLM), mendesain integrasi model ke dalam aplikasi produksi berskala nyata, serta mengoptimalkan infrastruktur inferensi agar responsif dan berkinerja tinggi.',
-          en: 'My foremost passion centers on Artificial Intelligence, specifically as an AI Engineer specializing in AI Architecture. I dedicate myself to learning how to design intelligent system architectures, build Large Language Model (LLM) orchestration pipelines, engineer production-grade model integrations, and optimize inference infrastructures for high responsiveness and performance.'
+          id: 'Perjalanan teknologi saya berakar dari ketertarikan kuat dalam menyatukan rekayasa web yang presisi dengan sistem kecerdasan buatan. Sebagai siswa kelas 12 di SMK Telkom Purwokerto, saya mendedikasikan waktu untuk membedah bagaimana algoritma Machine Learning bekerja dari fondasi dasarnya — mulai dari pengolahan data terstruktur, pelatihan model, hingga integrasi model inferensi cerdas ke dalam aplikasi web produksi yang interaktif.',
+          en: 'My journey is driven by a deep fascination with bridging high-precision web engineering and artificial intelligence systems. As a 12th-grade student at SMK Telkom Purwokerto, I dedicate my focus to understanding how Machine Learning algorithms function from first principles — from structured data preprocessing and model training to integrating intelligent inference models into interactive production web apps.'
         },
         {
-          id: 'Alih-alih sekadar memperlakukan AI sebagai kotak hitam (black box), saya tertarik pada tantangan skalabilitas komputasi, kebersihan aliran data kontekstual (RAG), hingga sistem agen cerdas yang otonom (agentic workflows). Ambisi saya adalah menjadi perancang sistem yang menjembatani inovasi kecerdasan buatan dengan keandalan rekayasa perangkat lunak modern.',
-          en: 'Rather than treating AI merely as a black box, I am captivated by computational scalability challenges, clean contextual data flows (RAG), and autonomous agentic workflows. My aspiration is to be the system architect who bridges state-of-the-art AI advancements with robust modern software engineering.'
+          id: 'Bagi saya, mendalami AI bukan hanya soal memanfaatkan model yang sudah jadi, melainkan menyelami arsitektur komputasi dan prinsip ilmiah di balik penalaran mesin. Aspirasi terbesar saya adalah melangkah ke garis depan eksplorasi teknologi — merancang arsitektur sistem yang scalable serta turut aktif berkontribusi dalam riset kecerdasan buatan yang berdampak luas bagi peradaban.',
+          en: 'To me, exploring AI is not simply about consuming pre-existing models, but delving into computational architectures and the scientific principles behind machine reasoning. My greatest aspiration is to advance to the frontiers of technological innovation — architecting scalable systems and actively contributing to impactful AI research for the future.'
         }
       ],
       quote: {
-        id: '“Arsitektur AI bukan sekadar menjalankan algoritma, melainkan membangun ekosistem cerdas yang terukur, aman, dan siap menjawab persoalan nyata.”',
-        en: '“AI Architecture is not just running an algorithm; it is crafting an intelligent ecosystem that is scalable, secure, and ready to solve real-world problems.”'
+        id: '“Dari bangku SMK menuju batas inovasi: mengasah logika komputasi hari ini untuk membuka jalan kontribusi nyata dalam riset kecerdasan buatan di masa depan.”',
+        en: '“From vocational high school foundations to the frontiers of innovation: sharpening computational logic today to pave the way for real contributions to future AI research.”'
       }
     },
 
@@ -101,7 +101,7 @@ const translations = {
           tag: 'SMK',
           school: 'SMK TELKOM PURWOKERTO',
           period: '2023 — Sekarang',
-          status: { id: 'Sedang Berjalan (Kelas 11)', en: 'In Progress (Grade 11)' },
+          status: { id: 'Sedang Berjalan (Kelas 12)', en: 'In Progress (Grade 12)' },
           level: { id: 'Rekayasa Perangkat Lunak', en: 'Software Engineering' },
           story: {
             id: 'Menempuh pendidikan kejuruan di bidang Rekayasa Perangkat Lunak (RPL). Di sinilah kemampuan teknis saya diasah secara intensif — mulai dari arsitektur web modern, algoritma pemrograman terstruktur, pengelolaan database, hingga eksplorasi mendalam pada sistem AI terapan dan proyek kolaboratif nyata.',
@@ -190,43 +190,54 @@ const translations = {
   },
 
   /* ─────────────────────────────────────────
-     PROJEK
+     PROJEK (CINEMATIC SHOWCASE)
   ───────────────────────────────────────── */
   projek: {
-    eyebrow:   { id: 'Karya Pilihan',  en: 'Featured Work'  },
-    title:     { id: 'Proyek Web',     en: 'Web Projects'   },
-    titleAccent: { id: 'Web',          en: 'Web'            },
-    viewProject: { id: 'Lihat Proyek →', en: 'View Project →' },
+    eyebrow:      { id: '// 04 — KARYA PILIHAN',    en: '// 04 — SELECTED WORKS'    },
+    title:        { id: 'Karya &',                  en: 'Featured &'                },
+    titleAccent:  { id: 'Proyek',                   en: 'Projects'                  },
+    lead: {
+      id: 'Implementasi nyata dari rekayasa perangkat lunak, antarmuka visual presisi tinggi, dan arsitektur web modern yang telah dideploy ke produksi.',
+      en: 'Tangible implementations of software engineering, high-precision visual interfaces, and modern web architectures deployed to production.'
+    },
+    viewProject:  { id: 'Eksplorasi Proyek ↗',      en: 'Explore Project ↗'         },
+    liveBadge:    { id: 'LIVE DEMO',                en: 'LIVE DEMO'                 },
     items: [
       {
-        id: '001',
-        name: { id: 'Website Boanana', en: 'Boanana Website' },
+        id: '01',
+        name: { id: 'Website Boanana', en: 'Boanana Platform' },
+        category: { id: 'E-Commerce & Brand Showcase', en: 'E-Commerce & Brand Showcase' },
         desc: {
-          id: 'Platform produk kripik pisang milik UMKM bernama Boanana yang dibangun menggunakan React dan Vite dengan tampilan yang interaktif dan responsif.',
-          en: 'A banana chip product platform for an UMKM brand called Boanana, built with React and Vite featuring an interactive and responsive interface.',
+          id: 'Platform komersial interaktif untuk produk kripik pisang UMKM Boanana. Dibangun menggunakan arsitektur React dan Vite berkinerja tinggi, dilengkapi visualisasi produk responsif, micro-interactions mulus, dan hierarki visual terarah.',
+          en: 'An interactive commercial platform for the Boanana banana chips brand. Built using high-performance React and Vite, featuring responsive product showcases, fluid micro-interactions, and a structured visual hierarchy.'
         },
-        tags: ['React', 'Node.js', 'Vite', 'Figma'],
+        tags: ['React', 'Vite', 'Node.js', 'Figma', 'Responsive UI'],
         link: 'https://lastfound.github.io/boanana/',
+        urlDisplay: 'lastfound.github.io/boanana',
       },
       {
-        id: '002',
-        name: { id: 'Exlusif Automotive',  en: 'Exlusif Automotive'  },
+        id: '02',
+        name: { id: 'Exlusif Automotive', en: 'Exlusif Automotive' },
+        category: { id: 'Automotive Showroom & Analytics', en: 'Automotive Showroom & Analytics' },
         desc: {
-          id: 'Website showroom otomotif dengan antarmuka modern, katalog kendaraan terstruktur, dan alur pemesanan interaktif.',
-          en: 'An automotive showroom website featuring a modern interface, structured vehicle catalog, and interactive inquiry flow.',
+          id: 'Platform portal showroom otomotif modern dengan antarmuka elegan, visualisasi spesifikasi kendaraan terstruktur, dashboard analitik berbasis Chart.js, serta alur penawaran interaktif yang teroptimasi untuk konversi.',
+          en: 'A modern automotive showroom portal featuring an elegant interface, structured vehicle specification catalog, Chart.js analytics dashboard, and an interactive lead inquiry flow optimized for conversions.'
         },
-        tags: ['Vue.js', 'Chart.js', 'Laravel', 'MySQL'],
+        tags: ['Vue.js', 'Chart.js', 'Laravel', 'MySQL', 'Design System'],
         link: 'https://lastfound.github.io/ExlusifAutomotive/',
+        urlDisplay: 'lastfound.github.io/ExlusifAutomotive',
       },
       {
-        id: '003',
-        name: { id: 'Aplikasi Chat Real-Time', en: 'Real-Time Chat App' },
+        id: '03',
+        name: { id: 'Real-Time Communication App', en: 'Real-Time Communication App' },
+        category: { id: 'WebSocket & Distributed State', en: 'WebSocket & Distributed State' },
         desc: {
-          id: 'Aplikasi perpesanan instan berbasis WebSocket dengan room chat, notifikasi real-time, dan transmisi data yang cepat.',
-          en: 'A real-time instant messaging application powered by WebSocket with chat rooms, live notifications, and fast data transmission.',
+          id: 'Aplikasi perpesanan instan real-time berlatensi rendah dengan arsitektur WebSocket (Socket.io). Mendukung transmisi data instan, room komunikasi terisolasi, status kehadiran aktif, dan manajemen state terdistribusi.',
+          en: 'A low-latency real-time instant messaging application powered by WebSocket (Socket.io). Supports instant bi-directional messaging, isolated conversation rooms, active presence status, and distributed state management.'
         },
-        tags: ['Socket.io', 'Express', 'PostgreSQL', 'Redis'],
-        link: '#',
+        tags: ['Socket.io', 'Express', 'Node.js', 'WebSocket', 'Redis Architecture'],
+        link: 'https://github.com/lastfound',
+        urlDisplay: 'github.com/lastfound/realtime-chat',
       },
     ],
   },

@@ -10,102 +10,140 @@ const IMAGES = [imgBoanana, imgDashboard, imgTictactoe];
 function Projek() {
   const { lang } = useLang();
   const t = translations.projek;
-  const headerRef = useRef(null);
-  const gridRef   = useRef(null);
+  const sectionRef = useRef(null);
 
   useEffect(() => {
-    const obs1 = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { headerRef.current?.classList.add('visible'); obs1.disconnect(); }
-    }, { threshold: 0.1 });
-    if (headerRef.current) obs1.observe(headerRef.current);
+    const rootEl = sectionRef.current;
+    if (!rootEl) return;
 
-    const obs2 = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) {
-        const cards = gridRef.current?.querySelectorAll('.stagger-child');
-        cards?.forEach((card, i) => {
-          setTimeout(() => card.classList.add('visible'), i * 120);
+    const showcaseRows = rootEl.querySelectorAll('.showcase-row');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('showcase-in-view');
+          } else {
+            // Replay saat di-scroll balik
+            entry.target.classList.remove('showcase-in-view');
+          }
         });
-        obs2.disconnect();
+      },
+      {
+        threshold: 0.15,
+        rootMargin: '-20px 0px -40px 0px',
       }
-    }, { threshold: 0.1 });
-    if (gridRef.current) obs2.observe(gridRef.current);
+    );
 
-    return () => { obs1.disconnect(); obs2.disconnect(); };
-  }, []);
+    showcaseRows.forEach((row) => observer.observe(row));
+
+    return () => observer.disconnect();
+  }, [lang]);
 
   return (
-    <section id="projek" className="section">
-      <div className="section-header reveal" ref={headerRef}>
+    <section id="projek" className="section projek-section" ref={sectionRef}>
+      {/* ── Section Header ── */}
+      <div className="section-header reveal">
         <div className="section-eyebrow">{t.eyebrow[lang]}</div>
         <h2 className="section-title">
-          {lang === 'id'
-            ? <>Proyek <span className="accent">Web</span> Saya</>
-            : <>My <span className="accent">Web</span> Projects</>
-          }
+          {t.title[lang]} <span className="accent">{t.titleAccent[lang]}</span>
         </h2>
+        <p className="projek-lead">{t.lead[lang]}</p>
       </div>
 
-      <div className="projects-grid stagger-parent" ref={gridRef}>
-        {t.items.map((project, idx) => (
-          <div className="project-card stagger-child" key={project.id}>
+      <div className="showcase-stream">
+        {t.items.map((project, idx) => {
+          const isReversed = idx % 2 !== 0;
 
-            {/* ── Preview Gambar / Thumbnail ── */}
-            <div
-              className="project-thumb"
-              style={{ position: 'relative', overflow: 'hidden' }}
+          return (
+            <article
+              key={project.id}
+              className={`showcase-row ${isReversed ? 'row-reversed' : ''}`}
             >
-              <div className="project-thumb-depth" />
+              {/* ── 1. Visual Mockup Window Side ── */}
+              <div className="showcase-visual-col">
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="showcase-window"
+                  aria-label={`Open ${project.name[lang]}`}
+                >
+                  {/* Browser Window Header Chrome */}
+                  <div className="window-chrome">
+                    <div className="window-dots">
+                      <span className="w-dot dot-close" />
+                      <span className="w-dot dot-min" />
+                      <span className="w-dot dot-max" />
+                    </div>
+                    <div className="window-url-bar">
+                      <span className="url-lock">🔒</span>
+                      <span className="url-text">{project.urlDisplay}</span>
+                    </div>
+                    <div className="window-status-pill">
+                      <span className="live-pulse" />
+                      {t.liveBadge[lang]}
+                    </div>
+                  </div>
 
-              {IMAGES[idx] ? (
-                <img
-                  src={IMAGES[idx]}
-                  alt={`Preview ${project.name[lang]}`}
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'contain',
-                    objectPosition: 'center',
-                    display: 'block',
-                    transition: 'transform 0.5s ease',
-                  }}
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.nextSibling.style.display = 'flex';
-                  }}
-                />
-              ) : null}
-              <span
-                style={{
-                  display: IMAGES[idx] ? 'none' : 'flex',
-                  width: '100%',
-                  height: '100%',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '1rem',
-                  fontFamily: 'monospace',
-                  color: '#666675',
-                }}
-              >
-                [{project.id}]
-              </span>
-            </div>
-
-            {/* ── Konten ── */}
-            <div className="project-body">
-              <div className="project-num">{project.id} / PROJECT</div>
-              <h3 className="project-name">{project.name[lang]}</h3>
-              <p className="project-desc">{project.desc[lang]}</p>
-              <div className="project-tags">
-                {project.tags.map(tag => <span key={tag} className="project-tag">{tag}</span>)}
+                  {/* Browser Viewport Area with Image */}
+                  <div className="window-screen">
+                    <div className="screen-depth-overlay" />
+                    <img
+                      src={IMAGES[idx]}
+                      alt={`Preview ${project.name[lang]}`}
+                      className="screen-img"
+                      loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                    <div className="screen-hover-badge">
+                      <span>{t.viewProject[lang]}</span>
+                    </div>
+                  </div>
+                </a>
               </div>
-              <a href={project.link} className="project-link" target="_blank" rel="noopener noreferrer">
-                {t.viewProject[lang]}
-              </a>
-            </div>
-          </div>
-        ))}
+
+              {/* ── 2. Narrative Content Side ── */}
+              <div className="showcase-content-col">
+                <div className="showcase-meta-top">
+                  <span className="showcase-idx">PROJECT // {project.id}</span>
+                  <span className="showcase-divider">/</span>
+                  <span className="showcase-cat">{project.category[lang]}</span>
+                </div>
+
+                <h3 className="showcase-title">
+                  <a href={project.link} target="_blank" rel="noopener noreferrer">
+                    {project.name[lang]}
+                  </a>
+                </h3>
+
+                <p className="showcase-desc">{project.desc[lang]}</p>
+
+                <div className="showcase-tags">
+                  {project.tags.map((tag) => (
+                    <span className="showcase-chip" key={tag}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="showcase-actions">
+                  <a
+                    href={project.link}
+                    className="showcase-cta-btn"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span>{t.viewProject[lang]}</span>
+                    <span className="cta-arrow">↗</span>
+                  </a>
+                </div>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </section>
   );
