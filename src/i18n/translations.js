@@ -10,6 +10,7 @@ const translations = {
     links: {
       intro:      { id: 'Intro',       en: 'Intro'   },
       tentang:    { id: 'Tentang',     en: 'About'   },
+      keahlian:   { id: 'Keahlian',    en: 'Skills'  },
       projek:     { id: 'Karya',       en: 'Work'    },
       sertifikat: { id: 'Sertifikat',  en: 'Certs'   },
       kontak:     { id: 'Kontak',      en: 'Contact' },
@@ -131,6 +132,61 @@ const translations = {
         }
       ]
     }
+  },
+
+  /* ─────────────────────────────────────────
+     KEAHLIAN (CORE SKILLS & CAPABILITIES)
+  ───────────────────────────────────────── */
+  keahlian: {
+    eyebrow:      { id: '// 03 — SPESIALISASI TEKNIS', en: '// 03 — TECHNICAL SPECIALIZATION' },
+    title:        { id: 'Pilar',                       en: 'Core' },
+    titleAccent:  { id: 'Keahlian',                    en: 'Skills' },
+    lead: {
+      id: 'Empat domain keahlian inti yang saya tekuni secara mendalam untuk merancang arsitektur, mengembangkan aplikasi modern, dan mengolah data komputasi.',
+      en: 'Four core specialization domains deeply cultivated to architect, engineer modern software, and orchestrate computational data.'
+    },
+    items: [
+      {
+        num: '01',
+        title: 'App Dev',
+        role: { id: 'Mobile Application Engineering', en: 'Mobile Application Engineering' },
+        desc: {
+          id: 'Pengembangan aplikasi mobile modern dengan arsitektur reaktif, manajemen state efisien, performa native yang mulus, serta integrasi endpoint API di ekosistem Android.',
+          en: 'Modern mobile app engineering with reactive architecture, robust state management, smooth native performance, and seamless API integration across the Android ecosystem.'
+        },
+        tags: ['Android', 'Kotlin', 'React Native', 'Mobile Architecture', 'Offline-First'],
+      },
+      {
+        num: '02',
+        title: 'Web Dev',
+        role: { id: 'Full Stack Web Engineering', en: 'Full Stack Web Engineering' },
+        desc: {
+          id: 'Perancangan dan implementasi aplikasi web skala penuh end-to-end, RESTful API yang aman, optimasi kecepatan render, serta struktur database yang scalable.',
+          en: 'End-to-end full stack web architecture, secure RESTful systems, high-speed render optimization, and scalable modern database structures.'
+        },
+        tags: ['React.js', 'Node.js', 'Laravel', 'Express', 'Tailwind', 'RESTful API'],
+      },
+      {
+        num: '03',
+        title: 'Data Science',
+        role: { id: 'Data Science & Machine Learning', en: 'Data Science & Machine Learning' },
+        desc: {
+          id: 'Analisis dataset kompleks, pemodelan statistik, eksplorasi pipeline AI inferensi, manipulasi data matematis, dan visualisasi analitik untuk sistem cerdas.',
+          en: 'Complex dataset analysis, statistical modeling, inference AI pipeline exploration, mathematical data manipulation, and analytical visualization for intelligent systems.'
+        },
+        tags: ['Python', 'Pandas', 'NumPy', 'Scikit-Learn', 'PyTorch Basics', 'Data Pipeline'],
+      },
+      {
+        num: '04',
+        title: 'UI/UX Designer',
+        role: { id: 'Interface & User Experience Design', en: 'Interface & User Experience Design' },
+        desc: {
+          id: 'Perancangan antarmuka visual presisi tinggi yang ergonomis dan intuitif, wireframing, sistem desain konsisten, serta prototipe interaktif berfokus kenyamanan pengguna.',
+          en: 'High-precision, ergonomic, and intuitive visual interface design, structured wireframing, cohesive design systems, and interactive user-centered prototyping.'
+        },
+        tags: ['Figma', 'Design Systems', 'Wireframing', 'Prototyping', 'User Research', 'Ergonomics'],
+      },
+    ],
   },
 
   /* ─────────────────────────────────────────

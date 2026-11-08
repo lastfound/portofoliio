@@ -8,6 +8,7 @@ import Footer           from './components/layout/Footer';
 
 import Intro            from './components/sections/Intro';
 import About            from './components/sections/About';
+import Keahlian         from './components/sections/Keahlian';
 import Projek           from './components/sections/Projek';
 import Sertifikat       from './components/sections/Sertifikat';
 import Kontak           from './components/sections/Kontak';
@@ -37,6 +38,7 @@ function App() {
         <main>
           <Intro />
           <About />
+          <Keahlian />
           <Projek />
           <Sertifikat />
           <Kontak />

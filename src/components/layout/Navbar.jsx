@@ -13,9 +13,10 @@ function Navbar() {
   const navLinks = [
     { id: 'intro',       label: t.links.intro[lang],       num: '01' },
     { id: 'tentang',     label: t.links.tentang[lang],     num: '02' },
-    { id: 'projek',      label: t.links.projek[lang],      num: '03' },
-    { id: 'sertifikat',  label: t.links.sertifikat[lang],  num: '04' },
-    { id: 'kontak',      label: t.links.kontak[lang],      num: '05' },
+    { id: 'keahlian',    label: t.links.keahlian[lang],    num: '03' },
+    { id: 'projek',      label: t.links.projek[lang],      num: '04' },
+    { id: 'sertifikat',  label: t.links.sertifikat[lang],  num: '05' },
+    { id: 'kontak',      label: t.links.kontak[lang],      num: '06' },
   ];
 
   useEffect(() => {
