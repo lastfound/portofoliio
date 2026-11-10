@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, Suspense, lazy } from 'react';
 import './styles/global.css';
 
 import LoadingScreen    from './components/layout/LoadingScreen';
@@ -15,7 +15,9 @@ import Kontak           from './components/sections/Kontak';
 
 import ScrollAnimator   from './components/ui/ScrollAnimator';
 import Particles        from './components/ui/Particles';
-import AIWidget         from './components/ai/AIWidget';
+
+// Lazy load AIWidget agar chatbot & logic berat tidak membebani initial payload
+const AIWidget = lazy(() => import('./components/ai/AIWidget'));
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -25,27 +27,24 @@ function App() {
     <>
       {!loaded && <LoadingScreen onComplete={handleComplete} />}
 
-      <div style={{
-        opacity: loaded ? 1 : 0,
-        transition: 'opacity 0.5s ease',
-        visibility: loaded ? 'visible' : 'hidden',
-      }}>
-        <div id="scroll-progress" />
-        <Particles />
-        <ScrollAnimator />
-        <Cursor />
-        <Navbar />
-        <main>
-          <Intro />
-          <About />
-          <Keahlian />
-          <Projek />
-          <Sertifikat />
-          <Kontak />
-        </main>
-        <Footer />
+      <div id="scroll-progress" />
+      <Particles />
+      <ScrollAnimator />
+      <Cursor />
+      <Navbar />
+      <main>
+        <Intro />
+        <About />
+        <Keahlian />
+        <Projek />
+        <Sertifikat />
+        <Kontak />
+      </main>
+      <Footer />
+
+      <Suspense fallback={null}>
         <AIWidget />
-      </div>
+      </Suspense>
     </>
   );
 }

@@ -95,6 +95,7 @@ function Sertifikat() {
                       alt={`Sertifikat ${cert.name[lang]}`}
                       className="cert-thumb-img"
                       loading="lazy"
+                      decoding="async"
                       onError={(e) => {
                         e.currentTarget.style.display = 'none';
                         const fallback = e.currentTarget.parentElement?.querySelector('.cert-thumb-fallback');

@@ -94,6 +94,7 @@ function Projek() {
                       alt={`Preview ${project.name[lang]}`}
                       className="screen-img"
                       loading="lazy"
+                      decoding="async"
                       onError={(e) => {
                         e.currentTarget.style.display = 'none';
                       }}

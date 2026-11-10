@@ -8,37 +8,38 @@ function LoadingScreen({ onComplete }) {
   useEffect(() => { onCompleteRef.current = onComplete; }, [onComplete]);
 
   useEffect(() => {
-    let current = 0;
-    const interval = setInterval(() => {
-      const step = current < 40  ? 3.2
-                 : current < 70  ? 2.2
-                 : current < 90  ? 1.4
-                 : current < 97  ? 0.8 : 2.0;
-      current = Math.min(current + step, 100);
-      setProgress(Math.floor(current));
-      if (current >= 100) {
-        clearInterval(interval);
-        setTimeout(() => {
-          setFadeOut(true);
-          setTimeout(() => onCompleteRef.current?.(), 600);
-        }, 300);
-      }
-    }, 25);
+    // Animasi progress bar cepat tanpa membebani thread utama
+    const t1 = setTimeout(() => setProgress(45), 50);
+    const t2 = setTimeout(() => setProgress(85), 180);
+    const t3 = setTimeout(() => setProgress(100), 320);
 
-    return () => clearInterval(interval);
+    const t4 = setTimeout(() => {
+      setFadeOut(true);
+      const t5 = setTimeout(() => onCompleteRef.current?.(), 400);
+      return () => clearTimeout(t5);
+    }, 450);
+
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      clearTimeout(t4);
+    };
   }, []);
 
   return (
-    <div style={{
-      position: 'fixed', inset: 0, zIndex: 10000,
-      background: '#000000',
-      display: 'flex', flexDirection: 'column',
-      alignItems: 'center', justifyContent: 'center',
-      opacity: fadeOut ? 0 : 1,
-      transition: fadeOut ? 'opacity 0.6s ease' : 'none',
-      pointerEvents: fadeOut ? 'none' : 'all',
-    }}>
-
+    <div
+      aria-hidden={fadeOut}
+      style={{
+        position: 'fixed', inset: 0, zIndex: 10000,
+        background: '#000000',
+        display: 'flex', flexDirection: 'column',
+        alignItems: 'center', justifyContent: 'center',
+        opacity: fadeOut ? 0 : 1,
+        transition: 'opacity 0.4s ease',
+        pointerEvents: fadeOut ? 'none' : 'all',
+      }}
+    >
       {/* Name */}
       <div style={{
         fontFamily: "'DM Serif Display', Georgia, serif",
@@ -63,7 +64,7 @@ function LoadingScreen({ onComplete }) {
             height: '100%',
             width: `${progress}%`,
             background: '#ffffff',
-            transition: 'width 0.04s linear',
+            transition: 'width 0.25s cubic-bezier(0.2, 0.8, 0.2, 1)',
             boxShadow: '0 0 8px rgba(255, 255, 255, 0.4)',
           }} />
         </div>
@@ -78,10 +79,8 @@ function LoadingScreen({ onComplete }) {
           fontWeight: 400,
         }}>
           <span>
-            {progress < 40 ? 'Initializing'
-             : progress < 70 ? 'Loading assets'
-             : progress < 90 ? 'Building UI'
-             : progress < 100 ? 'Almost ready'
+            {progress < 50 ? 'Initializing'
+             : progress < 100 ? 'Building UI'
              : 'Welcome'}
           </span>
           <span style={{ color: '#ffffff', fontFamily: 'monospace' }}>{progress}%</span>

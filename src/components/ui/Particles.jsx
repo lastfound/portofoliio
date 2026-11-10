@@ -110,21 +110,32 @@ function Particles() {
 
     // Loop Animasi
     const render = () => {
-      ctx.clearRect(0, 0, width, height);
-      time += 0.015;
+      // Pause jika tab sedang tidak aktif untuk hemat CPU
+      if (document.hidden) {
+        animId = requestAnimationFrame(render);
+        return;
+      }
 
-      // ── 1. Partikel & Garis Konstelasi Halus ──
+      ctx.clearRect(0, 0, width, height);
+      time += 0.012;
+
+      // ── 1. Partikel & Garis Konstelasi Halus (Diverifikasi Cepat dengan Kuadrat Jarak) ──
+      const maxDistSq = 95 * 95;
       for (let i = 0; i < dustParticles.length; i++) {
+        const p1 = dustParticles[i];
         for (let j = i + 1; j < dustParticles.length; j++) {
-          const dx = dustParticles[i].x - dustParticles[j].x;
-          const dy = dustParticles[i].y - dustParticles[j].y;
-          const dist = Math.hypot(dx, dy);
-          if (dist < 95) {
+          const p2 = dustParticles[j];
+          const dx = p1.x - p2.x;
+          const dy = p1.y - p2.y;
+          const distSq = dx * dx + dy * dy;
+
+          if (distSq < maxDistSq) {
+            const dist = Math.sqrt(distSq);
             ctx.beginPath();
             ctx.strokeStyle = `rgba(255, 255, 255, ${0.04 * (1 - dist / 95)})`;
             ctx.lineWidth = 0.5;
-            ctx.moveTo(dustParticles[i].x, dustParticles[i].y);
-            ctx.lineTo(dustParticles[j].x, dustParticles[j].y);
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
             ctx.stroke();
           }
         }
@@ -145,7 +156,7 @@ function Particles() {
         ctx.fill();
       });
 
-      // ── 2. Render Rumus Matematika AI (Melayang Tak Beraturan & Jelas) ──
+      // ── 2. Render Rumus Matematika AI (Crisp High-Performance Monospace) ──
       const margin = 280;
 
       formulas.forEach((item) => {
@@ -162,8 +173,8 @@ function Particles() {
 
         // Opasitas dinamis (jelas dan tegas)
         const currentAlpha = Math.min(
-          0.6,
-          Math.max(0.2, item.baseAlpha + Math.sin(time * 1.2 + item.phase) * 0.08)
+          0.55,
+          Math.max(0.22, item.baseAlpha + Math.sin(time * 1.2 + item.phase) * 0.08)
         );
 
         // Posisi Y responsif terhadap scroll parallax
@@ -174,20 +185,14 @@ function Particles() {
         ctx.translate(item.x, normalizedY);
         ctx.rotate(item.rotAngle);
 
-        ctx.font = `500 ${item.fontSize}px "JetBrains Mono", "Courier New", monospace`;
-        ctx.letterSpacing = '0.04em';
+        ctx.font = `500 ${item.fontSize}px "JetBrains Mono", monospace`;
 
-        // Efek glow halus untuk kejernihan & estetika anime/cyberpunk engineering
-        ctx.shadowColor = 'rgba(255, 255, 255, 0.45)';
-        ctx.shadowBlur = 5;
-
-        // Warna putih jelas & kontras tinggi
+        // Warna putih jelas & kontras tinggi tanpa efek blur berat pada thread utama
         ctx.fillStyle = `rgba(255, 255, 255, ${currentAlpha})`;
         ctx.fillText(item.text, 0, 0);
 
         // Aksen titik data tech kecil di sebelah formula
-        ctx.shadowBlur = 0;
-        ctx.fillStyle = `rgba(255, 255, 255, ${currentAlpha * 0.9})`;
+        ctx.fillStyle = `rgba(255, 255, 255, ${currentAlpha * 0.85})`;
         ctx.fillRect(-12, -item.fontSize * 0.42, 2.5, 2.5);
 
         ctx.restore();
@@ -196,9 +201,13 @@ function Particles() {
       animId = requestAnimationFrame(render);
     };
 
-    render();
+    // Tunda sejenak render pertama agar browser menyelesaikan First Paint & LCP tanpa rebutan CPU
+    const initialTimer = setTimeout(() => {
+      animId = requestAnimationFrame(render);
+    }, 60);
 
     return () => {
+      clearTimeout(initialTimer);
       cancelAnimationFrame(animId);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('scroll', handleScroll);

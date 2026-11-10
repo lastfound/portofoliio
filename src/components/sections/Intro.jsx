@@ -128,6 +128,8 @@ function Intro() {
                 src={PROFILE.photo}
                 alt={`${PROFILE.firstName} ${PROFILE.lastName}`}
                 className="avatar-photo-img"
+                fetchPriority="high"
+                decoding="async"
                 style={{
                   position: 'absolute', top: 0, left: 0,
                   width: '100%', height: '150%',
